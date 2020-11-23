@@ -17,9 +17,6 @@ GPIO.setup(cs, GPIO.OUT)
 GPIO.output(clk, GPIO.HIGH)
 GPIO.output(cs, GPIO.HIGH)
 
-# GPIO.input(channel)
-# GPIO.setup(button, GPIO.IN, GPIO.PUD_DOWN)
-
 
 def send_byte(b):
     b_str = format(b, '08b')
@@ -66,8 +63,63 @@ def read_mem(addr):
         time.sleep(0.05)
     print("Value from memory:")
     read_byte()
+    read_byte()
 
     # Send some dummy bytes.
+    send_byte(255)
+    send_byte(255)
+
+    return
+
+
+def write_mem(addr, value):
+    print("Send CMD24.")
+    GPIO.setup(do, GPIO.OUT)
+    GPIO.output(do, GPIO.HIGH)
+    GPIO.output(cs, GPIO.LOW)
+
+    send_byte(255)
+    send_byte(88)
+    send_byte(0)
+    send_byte(0)
+    send_byte(0)
+    send_byte(addr)
+    send_byte(141)
+    send_byte(255)
+
+    # Read response.
+    GPIO.output(di, GPIO.HIGH)
+    GPIO.setup(do, GPIO.IN, GPIO.PUD_DOWN)
+
+    while (read_byte() != "00000000"):
+        time.sleep(0.5)
+	
+	# Send data.
+    GPIO.setup(do, GPIO.OUT)
+    GPIO.output(do, GPIO.HIGH)
+    GPIO.output(cs, GPIO.LOW)
+    send_byte(255)
+    send_byte(254) # Start token.
+    send_byte(value)
+	
+	# Read response.
+    GPIO.output(di, GPIO.HIGH)
+    GPIO.setup(do, GPIO.IN, GPIO.PUD_DOWN)
+	
+    print("Write response:")
+    read_byte()
+
+    print("Send CMD13.")
+    GPIO.setup(do, GPIO.OUT)
+    GPIO.output(do, GPIO.HIGH)
+    GPIO.output(cs, GPIO.LOW)
+
+    send_byte(255)
+    send_byte(77)
+    send_byte(0)
+    send_byte(0)
+    send_byte(0)
+    send_byte(0)
     send_byte(255)
     send_byte(255)
 
@@ -165,8 +217,8 @@ def init_sd():
     send_byte(80)
     send_byte(0)
     send_byte(0)
+    send_byte(2)
     send_byte(0)
-    send_byte(255)
     send_byte(255)
     send_byte(255)
 
@@ -178,5 +230,7 @@ def init_sd():
 
 if __name__ == "__main__":
     init_sd()
+    read_mem(0)
+    write_mem(0, 5)
     read_mem(0)
 
