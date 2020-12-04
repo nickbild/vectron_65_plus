@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 import time
+import random
 
 
 # Data bus.
@@ -91,24 +92,53 @@ def main():
 
     # Amplitude (volume).
     set_address(8)
-    set_data(7)
+    set_data(5)
     set_address(9)
-    set_data(7)
+    set_data(5)
     set_address(10)
-    set_data(7)
+    set_data(5)
 
     # Noise.
     set_address(6)
+    set_data(20) # 0-31
+
+
+    # for c in (15, 16):
+    #     set_address(1)
+    #     set_data(c)
+    #     set_address(3)
+    #     set_data(c)
+    #     set_address(5)
+    #     set_data(c)
+    #     for i in (18, 50):
+    #         print("coarse: {0} fine: {1}".format(c, i))
+    #         set_address(0)
+    #         set_data(i)
+    #         set_address(2)
+    #         set_data(i)
+    #         set_address(4)
+    #         set_data(i)
+    #         time.sleep(0.1)
+
+
+
+    set_address(1)
+    set_data(0)
+    set_address(3)
+    set_data(0)
+    set_address(5)
     set_data(0)
 
-    for i in range(256):
+    for i in range(64):
         set_address(0)
-        set_data(i)
+        set_data(random.randrange(10,110))
         set_address(2)
-        set_data(i)
+        set_data(random.randrange(200,201))
         set_address(4)
-        set_data(i)
-        time.sleep(0.05)
+        set_data(random.randrange(50,60))
+        time.sleep(0.01)
+
+
 
     # Fine tone.
     set_address(0)
@@ -126,14 +156,13 @@ def main():
     set_address(5)
     set_data(0)
 
-
-
-    # set_address(8)
-    # set_data(0)
-    # set_address(9)
-    # set_data(0)
-    # set_address(10)
-    # set_data(0)
+    # Volume off.
+    set_address(8)
+    set_data(0)
+    set_address(9)
+    set_data(0)
+    set_address(10)
+    set_data(0)
 
     set_idle()
 
