@@ -1,8 +1,9 @@
 import RPi.GPIO as GPIO
 import time
 import random
-import pyaudio
-import wave
+import sounddevice as sd
+from scipy.io.wavfile import write
+import os
 
 
 # Data bus.
@@ -19,14 +20,6 @@ d7 = 26
 bc1 = 36
 bdir = 38
 reset = 40
-
-# Wav recording parameters.
-format_1 = pyaudio.paInt16
-channels = 1
-samp_rate = 44100
-chunk = 4096
-record_secs = 0.01
-dev_index = 2
 
 
 GPIO.setwarnings(False)
@@ -103,7 +96,7 @@ def set_data(data):
     return
 
 
-def play_all_sounds():
+def record_all_sounds():
     # 5,916,800 distinct sounds generated.
     for volume in (3, 6):
         set_address(8)  # Channel A
@@ -156,37 +149,20 @@ def volume_off():
 
 def get_mic_usb_index():
     p = pyaudio.PyAudio()
-    for ii in range(p.get_device_count()):
-        print(p.get_device_info_by_index(ii).get('name'))
+    for i in range(p.get_device_count()):
+        dev = p.get_device_info_by_index(i)
+        print((i,dev['name'],dev['maxInputChannels']))
 
     return
 
 
 def record_wav(wav_output_filename):
-    audio = pyaudio.PyAudio()
+    fs = 44100
+    seconds = 1
 
-    stream = audio.open(format=format_1, rate=samp_rate, channels=channels, \
-                        input_device_index = dev_index, input = True, \
-                        frames_per_buffer=chunk)
-
-    frames = []
-    # Loop through stream and append audio chunks to frame array.
-    for ii in range(0,int((samp_rate/chunk)*record_secs)):
-        data = stream.read(chunk)
-        frames.append(data)
-
-    # Clean up.
-    stream.stop_stream()
-    stream.close()
-    audio.terminate()
-
-    # Save the audio frames as .wav file.
-    wavefile = wave.open(wav_output_filename, 'wb')
-    wavefile.setnchannels(channels)
-    wavefile.setsampwidth(audio.get_sample_size(format))
-    wavefile.setframerate(samp_rate)
-    wavefile.writeframes(b''.join(frames))
-    wavefile.close()
+    myrecording = sd.rec(int(seconds * fs), samplerate=fs, channels=1)
+    sd.wait()
+    write(wav_output_filename, fs, myrecording)
 
     return
 
@@ -199,7 +175,16 @@ def main():
     reset_toggle() # Only needed after initial power up.
     set_idle()
 
-    play_all_sounds()
+    set_address(7) # Mixer.
+    set_data(120)  # Tone only.
+    set_address(8)  # Channel A
+    set_data(5)
+    set_address(0)
+    set_data(100)
+    record_wav("test.wav")
+    # time.sleep(1)
+
+    # record_all_sounds()
     volume_off()
 
     return
