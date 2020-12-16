@@ -20,6 +20,14 @@ bc1 = 36
 bdir = 38
 reset = 40
 
+# Wav recording parameters.
+format_1 = pyaudio.paInt16
+channels = 1
+samp_rate = 44100
+chunk = 4096
+record_secs = 0.01
+dev_index = 2
+
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
@@ -96,6 +104,7 @@ def set_data(data):
 
 
 def play_all_sounds():
+    # 5,916,800 distinct sounds generated.
     for volume in (3, 6):
         set_address(8)  # Channel A
         set_data(volume)
@@ -129,7 +138,8 @@ def play_all_sounds():
                             print("c: {0}, f: {1}, c2: {2}, f2: {3}, n: {4}, v: {5}".format(coarse, fine, coarse_2, fine_2, noise, volume))
                             set_data(fine_2)
                             # Channel A+B final sound has been set.
-                            #time.sleep(0.001)
+                            # time.sleep(0.001)
+                            # record_wav("sound_library/c-{0}_f-{1}_c2-{2}_f2-{3}_n-{4}_v-{5}.wav".format(coarse, fine, coarse_2, fine_2, noise, volume))
     return
 
 
@@ -144,13 +154,47 @@ def volume_off():
     return
 
 
-def main():
-    # Mixer.
-    # set_data(64) # 64 (tone and noise), 71 (noise only), 120 (tone only)
+def get_mic_usb_index():
+    p = pyaudio.PyAudio()
+    for ii in range(p.get_device_count()):
+        print(p.get_device_info_by_index(ii).get('name'))
 
-    # p = pyaudio.PyAudio()
-    # for ii in range(p.get_device_count()):
-    #     print(p.get_device_info_by_index(ii).get('name'))
+    return
+
+
+def record_wav(wav_output_filename):
+    audio = pyaudio.PyAudio()
+
+    stream = audio.open(format=format_1, rate=samp_rate, channels=channels, \
+                        input_device_index = dev_index, input = True, \
+                        frames_per_buffer=chunk)
+
+    frames = []
+    # Loop through stream and append audio chunks to frame array.
+    for ii in range(0,int((samp_rate/chunk)*record_secs)):
+        data = stream.read(chunk)
+        frames.append(data)
+
+    # Clean up.
+    stream.stop_stream()
+    stream.close()
+    audio.terminate()
+
+    # Save the audio frames as .wav file.
+    wavefile = wave.open(wav_output_filename, 'wb')
+    wavefile.setnchannels(channels)
+    wavefile.setsampwidth(audio.get_sample_size(format))
+    wavefile.setframerate(samp_rate)
+    wavefile.writeframes(b''.join(frames))
+    wavefile.close()
+
+    return
+
+
+def main():
+    # Mixer: set_data(64) # 64 (tone and noise), 71 (noise only), 120 (tone only)
+
+    # get_mic_usb_index()
 
     reset_toggle() # Only needed after initial power up.
     set_idle()
