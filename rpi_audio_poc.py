@@ -1,6 +1,8 @@
 import RPi.GPIO as GPIO
 import time
 import random
+import pyaudio
+import wave
 
 
 # Data bus.
@@ -16,6 +18,7 @@ d7 = 26
 # Control signals.
 bc1 = 36
 bdir = 38
+reset = 40
 
 
 GPIO.setwarnings(False)
@@ -31,6 +34,17 @@ GPIO.setup(d6, GPIO.OUT)
 GPIO.setup(d7, GPIO.OUT)
 GPIO.setup(bc1, GPIO.OUT)
 GPIO.setup(bdir, GPIO.OUT)
+GPIO.setup(reset, GPIO.OUT)
+
+
+def reset_toggle():
+    GPIO.output(reset, GPIO.HIGH)
+    time.sleep(0.25)
+    GPIO.output(reset, GPIO.LOW)
+    time.sleep(0.25)
+    GPIO.output(reset, GPIO.HIGH)
+
+    return
 
 
 def set_idle():
@@ -65,7 +79,6 @@ def set_data(data):
     set_idle()
 
     b_str = format(data, '08b')
-    # b_str = "11111111"
     GPIO.output(d0, int(b_str[7]))
     GPIO.output(d1, int(b_str[6]))
     GPIO.output(d2, int(b_str[5]))
@@ -77,94 +90,73 @@ def set_data(data):
 
     GPIO.output(bdir, GPIO.HIGH)
 
-    # time.sleep(0.05)
     set_idle()
 
     return
 
 
+def play_all_sounds():
+    for volume in (3, 6):
+        set_address(8)  # Channel A
+        set_data(volume)
+        set_address(9)  # Channel B
+        set_data(volume)
+
+        for noise in (0, 4, 8, 32):
+            if noise == 32:
+                set_address(7) # Mixer.
+                set_data(120)  # Tone only.
+            else:
+                set_address(7) # Mixer.
+                set_data(64)  # Tone and noise.
+                set_address(6) # Noise.
+                set_data(noise)
+
+            for coarse in range(11):
+                set_address(1) # Tone Channel A, coarse (0-15)
+                set_data(coarse)
+
+                set_address(0) # Tone Channel A, fine (0-255)
+                for fine in range(0, 256, 3):
+                    set_data(fine)
+
+                    for coarse_2 in range(11):
+                        set_address(3) # Tone Channel B, coarse (0-15)
+                        set_data(coarse_2)
+
+                        set_address(2) # Tone Channel B, fine (0-255)
+                        for fine_2 in range(1, 256, 3):
+                            print("c: {0}, f: {1}, c2: {2}, f2: {3}, n: {4}, v: {5}".format(coarse, fine, coarse_2, fine_2, noise, volume))
+                            set_data(fine_2)
+                            # Channel A+B final sound has been set.
+                            #time.sleep(0.001)
+    return
+
+
+def volume_off():
+    set_address(8)  # Channel A
+    set_data(0)
+    set_address(9)  # Channel B
+    set_data(0)
+    set_address(10) # Channel C
+    set_data(0)
+
+    return
+
+
 def main():
-    set_idle()
-
     # Mixer.
-    set_address(7)
-    set_data(56) # 0 (tone and noise), 56 (tone only)
+    # set_data(64) # 64 (tone and noise), 71 (noise only), 120 (tone only)
 
-    # Amplitude (volume).
-    set_address(8)
-    set_data(5)
-    set_address(9)
-    set_data(5)
-    set_address(10)
-    set_data(5)
+    # p = pyaudio.PyAudio()
+    # for ii in range(p.get_device_count()):
+    #     print(p.get_device_info_by_index(ii).get('name'))
 
-    # Noise.
-    set_address(6)
-    set_data(20) # 0-31
-
-
-    # for c in (15, 16):
-    #     set_address(1)
-    #     set_data(c)
-    #     set_address(3)
-    #     set_data(c)
-    #     set_address(5)
-    #     set_data(c)
-    #     for i in (18, 50):
-    #         print("coarse: {0} fine: {1}".format(c, i))
-    #         set_address(0)
-    #         set_data(i)
-    #         set_address(2)
-    #         set_data(i)
-    #         set_address(4)
-    #         set_data(i)
-    #         time.sleep(0.1)
-
-
-
-    set_address(1)
-    set_data(0)
-    set_address(3)
-    set_data(0)
-    set_address(5)
-    set_data(0)
-
-    for i in range(64):
-        set_address(0)
-        set_data(random.randrange(10,110))
-        set_address(2)
-        set_data(random.randrange(200,201))
-        set_address(4)
-        set_data(random.randrange(50,60))
-        time.sleep(0.01)
-
-
-
-    # Fine tone.
-    set_address(0)
-    set_data(168)
-    set_address(2)
-    set_data(168)
-    set_address(4)
-    set_data(168)
-
-    # Coarse tone.
-    set_address(1)
-    set_data(0)
-    set_address(3)
-    set_data(0)
-    set_address(5)
-    set_data(0)
-
-    # Volume off.
-    set_address(8)
-    set_data(0)
-    set_address(9)
-    set_data(0)
-    set_address(10)
-    set_data(0)
-
+    reset_toggle() # Only needed after initial power up.
     set_idle()
+
+    play_all_sounds()
+    volume_off()
 
     return
 
