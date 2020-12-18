@@ -96,6 +96,45 @@ def set_data(data):
     return
 
 
+def record_all_sounds():
+    # 5,916,800 distinct sounds generated.
+    for volume in (3, 6):
+        set_address(8)  # Channel A
+        set_data(volume)
+        set_address(9)  # Channel B
+        set_data(volume)
+
+        for noise in (0, 4, 8, 32):
+            if noise == 32:
+                set_address(7) # Mixer.
+                set_data(120)  # Tone only.
+            else:
+                set_address(7) # Mixer.
+                set_data(64)  # Tone and noise.
+                set_address(6) # Noise.
+                set_data(noise)
+
+            for coarse in range(11):
+                set_address(1) # Tone Channel A, coarse (0-15)
+                set_data(coarse)
+
+                set_address(0) # Tone Channel A, fine (0-255)
+                for fine in range(0, 256, 3):
+                    set_data(fine)
+
+                    for coarse_2 in range(11):
+                        set_address(3) # Tone Channel B, coarse (0-15)
+                        set_data(coarse_2)
+
+                        set_address(2) # Tone Channel B, fine (0-255)
+                        for fine_2 in range(1, 256, 3):
+                            print("c: {0}, f: {1}, c2: {2}, f2: {3}, n: {4}, v: {5}".format(coarse, fine, coarse_2, fine_2, noise, volume))
+                            set_data(fine_2)
+                            # Channel A+B final sound has been set.
+                            record_wav("library_audio/c-{0}_f-{1}_c2-{2}_f2-{3}_n-{4}_v-{5}.wav".format(coarse, fine, coarse_2, fine_2, noise, volume))
+    return
+
+
 def volume_off():
     set_address(8)  # Channel A
     set_data(0)
@@ -107,23 +146,46 @@ def volume_off():
     return
 
 
+def get_mic_usb_index():
+    p = pyaudio.PyAudio()
+    for i in range(p.get_device_count()):
+        dev = p.get_device_info_by_index(i)
+        print((i,dev['name'],dev['maxInputChannels']))
+
+    return
+
+
+def record_wav(wav_output_filename):
+    fs = 44100
+    seconds = 1
+
+    myrecording = sd.rec(int(seconds * fs), samplerate=fs, channels=1)
+    sd.wait()
+    write(wav_output_filename, fs, myrecording)
+
+    return
+
+
 def main():
     # Mixer: set_data(64) # 64 (tone and noise), 71 (noise only), 120 (tone only)
+
+    # get_mic_usb_index()
 
     reset_toggle() # Only needed after initial power up.
     set_idle()
 
     set_address(7) # Mixer.
     set_data(120)  # Tone only.
-
-    set_address(8)  # Channel A volume.
+    set_address(8)  # Channel A
     set_data(5)
-
-    set_address(0)  # Tone A.
+    set_address(0)
     set_data(100)
 
-    time.sleep(1)
+    # TODO: After test, change recording duration to 0.01 s.
+    record_wav("test.wav")
+    # time.sleep(1)
 
+    # record_all_sounds()
     volume_off()
 
     return
