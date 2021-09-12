@@ -131,6 +131,10 @@ def write_mem(addr, value):
 
     print("Response:")
     read_byte()
+    read_byte()
+    read_byte()
+    read_byte()
+    read_byte()
 
     GPIO.output(cs, GPIO.HIGH)
 
@@ -138,11 +142,11 @@ def write_mem(addr, value):
 
 
 def init_sd():
-    GPIO.output(cs, GPIO.LOW)
-
     print("Send CMD0.")
     GPIO.setup(do, GPIO.OUT)
     GPIO.output(do, GPIO.HIGH)
+
+    GPIO.output(cs, GPIO.LOW)
 
     send_byte(255)
     send_byte(64)
@@ -259,5 +263,13 @@ def init_sd():
 if __name__ == "__main__":
     init_sd()
     read_mem(0)
-    write_mem(0, 15)
+    write_mem(0, 1)
+    read_mem(0)
+    write_mem(0, 2)
+    read_mem(0)
+    write_mem(0, 3)
+    read_mem(0)
+    write_mem(0, 4)
+    read_mem(0)
+    write_mem(0, 5)
     read_mem(0)
