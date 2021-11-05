@@ -53,7 +53,7 @@ Pin |  GPIO Reg  |  PWM timer
 29  |  GPIO9_31  |  FLEX_PWM3 
 */
 
-int rom_contents[32768] = {};
+uint32_t rom_contents[32768] = {};
 uint16_t addr;
 uint16_t temp;
 
