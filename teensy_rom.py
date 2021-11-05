@@ -1,10 +1,14 @@
 import os
 
+
+os.remove("teensy_rom/teensy_rom.ino")
+f = open("teensy_rom/teensy_rom.ino", "a")
+
 ###
 # Print Arduino code.
 ###
 
-print("""/*
+f.write("""/*
 Pin |  GPIO Reg  |  PWM timer
 ----|------------|-------------
 01  |  GPIO6_02  |  FLEX_PWM1 
@@ -49,7 +53,7 @@ Pin |  GPIO Reg  |  PWM timer
 29  |  GPIO9_31  |  FLEX_PWM3 
 */
 
-int rom_contents[32768] = {{}};
+int rom_contents[32768] = {};
 uint16_t addr;
 uint16_t temp;
 
@@ -148,8 +152,10 @@ for line in open("hex_auto.txt"):
         b = "{0:b}".format(int(hex, 16)).zfill(8)
         b_reg = "{0}000{1}{2}{3}000000{4}{5}{6}{7}".format(b[0], b[1], b[2], b[3], b[4], b[5], b[6], b[7])
 
-        print("\trom_contents[{0}] = {1};\t\t// Actual: {2}".format(cnt, int(b_reg, 2), int(hex, 16)))
+        f.write("\trom_contents[{0}] = {1};\t\t// Actual: {2}\n".format(cnt, int(b_reg, 2), int(hex, 16)))
         cnt += 1
 
 # Finish Arduino code.
-print("}")
+f.write("}\n")
+
+f.close()
