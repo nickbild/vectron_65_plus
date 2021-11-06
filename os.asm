@@ -41,7 +41,7 @@
 ;     $6B01-$6B30 - Display row 27
 ;     $6C01-$6C30 - Display row 28
 ; $7F00 - Display Interrupt
-; $7FE0-$7FEF - 6522 VIA (For keyboard input)
+; $7FE0-$7FEF - 6522 VIA (For keyboard input, AY-3-8910, SD card)
 ; $7FF0-$7FFF - 6522 VIA (For VGA display)
 ; $8000-$FFFF - ROM
 ; 		$FFFA-$FFFB - NMI IRQ Vector
@@ -99,7 +99,7 @@ StartExe	ORG $8000
 		sta $7FF1
 
     ;;;;
-    ;; Set up sound / keyboad VIA.
+    ;; Set up sound / keyboard / SD card VIA.
     ;;;;
 
 		; Disable all VIA interrupts in IER.
@@ -137,7 +137,8 @@ StartExe	ORG $8000
 		jsr SoundIdle
 
 		; Volume
-		lda #$08
+		; Channel A
+    lda #$08
 		sta $7FE1
 		jsr LatchSoundAddress
 		jsr SoundIdle
@@ -147,13 +148,37 @@ StartExe	ORG $8000
 		jsr LatchSoundData
 		jsr SoundIdle
 
-		; Tone
-		lda #$00
+    ; Channel B
+    lda #$09
 		sta $7FE1
 		jsr LatchSoundAddress
 		jsr SoundIdle
 
-		lda #$A8
+		lda #$05
+		sta $7FE1
+		jsr LatchSoundData
+		jsr SoundIdle
+
+    ; Startup sound
+    jsr Beep
+
+    ; Volume off.
+		lda #$08
+		sta $7FE1
+		jsr LatchSoundAddress
+		jsr SoundIdle
+
+		lda #$00
+		sta $7FE1
+		jsr LatchSoundData
+		jsr SoundIdle
+
+    lda #$09
+		sta $7FE1
+		jsr LatchSoundAddress
+		jsr SoundIdle
+
+		lda #$00
 		sta $7FE1
 		jsr LatchSoundData
 		jsr SoundIdle
@@ -362,6 +387,68 @@ LatchSoundAddress
 		.word #$7FE0
 
 		rts
+
+
+Beep
+    ; Tone - coarse
+		lda #$01
+		sta $7FE1
+		jsr LatchSoundAddress
+		jsr SoundIdle
+
+		lda #$00
+		sta $7FE1
+		jsr LatchSoundData
+		jsr SoundIdle
+
+    ; Tone - coarse
+		lda #$03
+		sta $7FE1
+		jsr LatchSoundAddress
+		jsr SoundIdle
+
+		lda #$00
+		sta $7FE1
+		jsr LatchSoundData
+		jsr SoundIdle
+
+    ldy #$04
+BEEPAGAIN2:
+    ldx #$FF
+    
+    ; Tone - fine
+		lda #$02
+		sta $7FE1
+		jsr LatchSoundAddress
+		jsr SoundIdle
+
+		tya
+		sta $7FE1
+		jsr LatchSoundData
+		jsr SoundIdle
+BEEPAGAIN:
+    ; Tone - fine
+		lda #$00
+		sta $7FE1
+		jsr LatchSoundAddress
+		jsr SoundIdle
+
+		txa
+		sta $7FE1
+		jsr LatchSoundData
+		jsr SoundIdle
+
+    lda #$FF
+SLOWDOWNBEEP:
+    sbc #$01
+    bne SLOWDOWNBEEP
+
+    dex
+    bne BEEPAGAIN
+    dey
+    bne BEEPAGAIN2
+
+    rts
 
 
 ; Stored typed character in RAM.
