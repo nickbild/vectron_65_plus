@@ -183,8 +183,6 @@ StartExe	ORG $8000
 		jsr LatchSoundData
 		jsr SoundIdle
 
-
-
     ; Init the keyboard, LEDs, and flags.
     jsr   KBINIT
 
@@ -199,8 +197,24 @@ StartExe	ORG $8000
 
 		lda ScreenRow
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		lda ScreenColumn
-		sta $7FF1
+		;sta $7FF1
+    sta $7FF0   ; Data register.
+    lda #$02    ; Select C1 (col) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
 
     cli
 
@@ -241,8 +255,18 @@ SNDCHR
 		bne NotBackSpace
 
 		; Remove cursor.
+    jsr SetRowCol
+
 		lda #$20
-		sta $7F00
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00
 
 		dec ScreenColumn
 
@@ -262,43 +286,71 @@ BackSpaceRowOne
 SkipBackSpaceLineWrap
 
 		; Remove cursor.
+    jsr SetRowCol
+
 		lda #$20
-		sta $7F00
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00
 
 		; Set cursor address.
-		lda ScreenRow
-		sta $7FF0
-		lda ScreenColumn
-		sta $7FF1
+		jsr SetRowCol
 
 		lda #$7F		; Cursor.
-		sta $7F00		; Latch cursor to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch cursor to display.
 
 		jmp NonPrintable
 NotBackSpace
 
 		; Control char?
 		cmp #$0B
-		bcc NonPrintable ; if < $0B, skip output.
+		bcs NotNonPrintable ; if < $0B, skip output.
 		cmp #$0E
-		beq NonPrintable
+		bne NotNonPrintable
 		cmp #$11
-		beq NonPrintable
+		bne NotNonPrintable
 		cmp #$80
-		beq NonPrintable
+		bne NotNonPrintable
 		cmp #$91
-		beq NonPrintable
+		bne NotNonPrintable
 		cmp #$93
-		beq NonPrintable
+		bne NotNonPrintable
 		cmp #$FF
-		beq NonPrintable
+		bne NotNonPrintable
+
+    jmp NonPrintable
+NotNonPrintable
 
 		; Enter?
 		cmp #$0D
 		bne NotEnter
 		; Remove cursor.
+    jsr SetRowCol
+    
 		lda #$20
-		sta $7F00
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00
 
 		; Move to start of next line.
 		lda #$01
@@ -315,24 +367,39 @@ NotBackSpace
 NoScreenScroll
 
 		; Set cursor address.
-		lda ScreenRow
-		sta $7FF0
-		lda ScreenColumn
-		sta $7FF1
+		jsr SetRowCol
 
 		lda #$7F		; Cursor.
-		sta $7F00		; Latch cursor to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch cursor to display.
 
 		jmp NonPrintable
 NotEnter
 
-		sta $7F00		; Latch ASCII in A to display.
+    jsr SetRowCol
+
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		sta Temp
 		jsr SaveCharacter
 
 		; Advance cursor and handle screen wrapping.
 		inc ScreenColumn
-		lda #$27
+		lda #$31
 		cmp ScreenColumn
 		bne NoLineWrap
 		lda #$01
@@ -341,18 +408,47 @@ NotEnter
 NoLineWrap
 
 		; Set cursor address.
-		lda ScreenRow
-		sta $7FF0
-		lda ScreenColumn
-		sta $7FF1
+		jsr SetRowCol
 
 		lda #$7F		; Cursor.
-		sta $7F00		; Latch cursor to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch cursor to display.
 
 NonPrintable
 		pla
 
 		rts
+
+
+SetRowCol
+    lda ScreenRow
+		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
+		lda ScreenColumn
+		sta $7FF0   ; Data register.
+    lda #$02    ; Select C1 (col) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
+    rts
 
 
 ; Tiny Basic break.
@@ -1064,281 +1160,729 @@ ClearScreen28
 RedrawScreen
 		lda #$01
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow1
 		stx $7FF1
 		lda $5100,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow1
 
 		lda #$02
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow2
 		stx $7FF1
 		lda $5200,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow2
 
 		lda #$03
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow3
 		stx $7FF1
 		lda $5300,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow3
 
 		lda #$04
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow4
 		stx $7FF1
 		lda $5400,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow4
 
 		lda #$05
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow5
 		stx $7FF1
 		lda $5500,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow5
 
 		lda #$06
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow6
 		stx $7FF1
 		lda $5600,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow6
 
 		lda #$07
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow7
 		stx $7FF1
 		lda $5700,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow7
 
 		lda #$08
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow8
 		stx $7FF1
 		lda $5800,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow8
 
 		lda #$09
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow9
 		stx $7FF1
 		lda $5900,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow9
 
 		lda #$0A
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow10
 		stx $7FF1
 		lda $5A00,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow10
 
 		lda #$0B
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow11
 		stx $7FF1
 		lda $5B00,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow11
 
 		lda #$0C
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow12
 		stx $7FF1
 		lda $5C00,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow12
 
 		lda #$0D
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow13
 		stx $7FF1
 		lda $5D00,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow13
 
 		lda #$0E
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow14
 		stx $7FF1
 		lda $5E00,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow14
 
 		lda #$0F
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow15
 		stx $7FF1
 		lda $5F00,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow15
 
 		lda #$10
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow16
 		stx $7FF1
 		lda $6000,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow16
 
 		lda #$11
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow17
 		stx $7FF1
 		lda $6100,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow17
 
 		lda #$12
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow18
 		stx $7FF1
 		lda $6200,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow18
 
 		lda #$13
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow19
 		stx $7FF1
 		lda $6300,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow19
 
 		lda #$14
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow20
 		stx $7FF1
 		lda $6400,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow20
 
 		lda #$15
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow21
 		stx $7FF1
 		lda $6500,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow21
 
 		lda #$16
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow22
 		stx $7FF1
 		lda $6600,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow22
 
 		lda #$17
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow23
 		stx $7FF1
 		lda $6700,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow23
 
 		lda #$18
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow24
 		stx $7FF1
 		lda $6800,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow24
 
 		lda #$19
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow25
 		stx $7FF1
 		lda $6900,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow25
 
 		lda #$1A
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow26
 		stx $7FF1
 		lda $6A00,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow26
 
 		lda #$1B
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow27
 		stx $7FF1
 		lda $6B00,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow27
 
 		lda #$1C
 		sta $7FF0
+    lda #$01    ; Select C0 (row) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+
 		ldx #$30
 RedrawRow28
 		stx $7FF1
 		lda $6C00,x
-		sta $7F00		; Latch ASCII in A to display.
+		sta $7FF0   ; Data register.
+    lda #$04    ; Select C2 (char) register clock.
+    ; Clock high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+    ; Clock low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    sta $7F00		; Latch ASCII in A to display.
 		dex
 		bne RedrawRow28
 
