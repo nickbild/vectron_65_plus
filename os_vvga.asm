@@ -318,22 +318,24 @@ NotBackSpace
 
 		; Control char?
 		cmp #$0B
-		bcs NotNonPrintable ; if < $0B, skip output.
+		bcc NonPrintableJmp ; if < $0B, skip output.
 		cmp #$0E
-		bne NotNonPrintable
+		beq NonPrintableJmp
 		cmp #$11
-		bne NotNonPrintable
+		beq NonPrintableJmp
 		cmp #$80
-		bne NotNonPrintable
+		beq NonPrintableJmp
 		cmp #$91
-		bne NotNonPrintable
+		beq NonPrintableJmp
 		cmp #$93
-		bne NotNonPrintable
+		beq NonPrintableJmp
 		cmp #$FF
-		bne NotNonPrintable
+		beq NonPrintableJmp
 
+    jmp IsPrintable
+NonPrintableJmp
     jmp NonPrintable
-NotNonPrintable
+IsPrintable
 
 		; Enter?
 		cmp #$0D
@@ -382,8 +384,9 @@ NoScreenScroll
 
 		jmp NonPrintable
 NotEnter
-
+    sta Temp
     jsr SetRowCol
+    lda Temp
 
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
