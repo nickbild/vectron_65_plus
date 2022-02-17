@@ -94,8 +94,8 @@ StartExe	ORG $8000
 		lda #$00
 		sta $7FF0
 
-		; Set ORA outputs low.
-		lda #$00
+		; Set ORA outputs low, except for Text Mode interrupt.
+		lda #$08
 		sta $7FF1
 
     ;;;;
@@ -231,6 +231,7 @@ SNDMSG   lda MBLK,X                 ; Get a character from the message block
          beq EXSM                   ; Finish up if it is
          jsr SNDCHR                 ; Otherwise send the character
          inx                        ; Increment the pointer
+         jsr DelayShort
          jmp SNDMSG                 ; Go get next character
 EXSM     rts                        ; Return
 
@@ -266,7 +267,7 @@ SNDCHR
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00
+    jsr TriggerInterrupt
 
 		dec ScreenColumn
 
@@ -297,7 +298,7 @@ SkipBackSpaceLineWrap
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00
+    jsr TriggerInterrupt
 
 		; Set cursor address.
 		jsr SetRowCol
@@ -311,7 +312,7 @@ SkipBackSpaceLineWrap
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch cursor to display.
+    jsr TriggerInterrupt		; Latch cursor to display.
 
 		jmp NonPrintable
 NotBackSpace
@@ -352,7 +353,7 @@ IsPrintable
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00
+    jsr TriggerInterrupt
 
 		; Move to start of next line.
 		lda #$01
@@ -380,7 +381,7 @@ NoScreenScroll
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch cursor to display.
+    jsr TriggerInterrupt		; Latch cursor to display.
 
 		jmp NonPrintable
 NotEnter
@@ -396,13 +397,13 @@ NotEnter
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		sta Temp
 		jsr SaveCharacter
 
 		; Advance cursor and handle screen wrapping.
 		inc ScreenColumn
-		lda #$31
+		lda #$27
 		cmp ScreenColumn
 		bne NoLineWrap
 		lda #$01
@@ -410,19 +411,21 @@ NotEnter
 		inc ScreenRow
 NoLineWrap
 
-		; Set cursor address.
-		jsr SetRowCol
+    ; Uncomment for cursor. 
+    ; jsr DelayShort
+		; ; Set cursor address.
+		; jsr SetRowCol
 
-		lda #$7F		; Cursor.
-		sta $7FF0   ; Data register.
-    lda #$04    ; Select C2 (char) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-    sta $7F00		; Latch cursor to display.
+		; lda #$7F		; Cursor.
+		; sta $7FF0   ; Data register.
+    ; lda #$04    ; Select C2 (char) register clock.
+    ; ; Clock high
+    ; .byte #$0C  ; tsb - set bit
+    ; .word $7FF1 ; Control register.
+    ; ; Clock low
+    ; .byte #$1C  ; trb - clear bit
+    ; .word $7FF1 ; Control register.
+    ; jsr TriggerInterrupt		; Latch cursor to display.
 
 NonPrintable
 		pla
@@ -452,6 +455,52 @@ SetRowCol
     .word $7FF1 ; Control register.
 
     rts
+
+
+TriggerInterrupt
+    lda #$08    ; Select INT signl.
+    ; Interupt low
+    .byte #$1C  ; trb - clear bit
+    .word $7FF1 ; Control register.
+    ; Interupt high
+    .byte #$0C  ; tsb - set bit
+    .word $7FF1 ; Control register.
+
+    rts
+
+
+Delay		    
+    .byte #$DA ; phx - mnemonic unknown to DASM.
+    .byte #$5A ; phy
+
+    ldx #$FF
+DelayLoop1	ldy #$FF
+DelayLoop2	dey
+		bne DelayLoop2
+		dex
+		bne DelayLoop1
+
+    .byte #$7A ; ply
+    .byte #$FA ; plx
+
+		rts
+
+
+DelayShort
+    .byte #$DA ; phx - mnemonic unknown to DASM.
+    .byte #$5A ; phy
+
+    ldx #$07
+DelayShortLoop1	ldy #$FF
+DelayShortLoop2	dey
+		bne DelayShortLoop2
+		dex
+		bne DelayShortLoop1
+
+    .byte #$7A ; ply
+    .byte #$FA ; plx
+
+		rts
 
 
 ; Tiny Basic break.
@@ -1183,7 +1232,7 @@ RedrawRow1
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow1
 
@@ -1209,7 +1258,7 @@ RedrawRow2
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow2
 
@@ -1235,7 +1284,7 @@ RedrawRow3
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow3
 
@@ -1261,7 +1310,7 @@ RedrawRow4
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow4
 
@@ -1287,7 +1336,7 @@ RedrawRow5
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow5
 
@@ -1313,7 +1362,7 @@ RedrawRow6
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow6
 
@@ -1339,7 +1388,7 @@ RedrawRow7
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow7
 
@@ -1365,7 +1414,7 @@ RedrawRow8
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow8
 
@@ -1391,7 +1440,7 @@ RedrawRow9
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow9
 
@@ -1417,7 +1466,7 @@ RedrawRow10
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow10
 
@@ -1443,7 +1492,7 @@ RedrawRow11
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow11
 
@@ -1469,7 +1518,7 @@ RedrawRow12
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow12
 
@@ -1495,7 +1544,7 @@ RedrawRow13
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow13
 
@@ -1521,7 +1570,7 @@ RedrawRow14
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow14
 
@@ -1547,7 +1596,7 @@ RedrawRow15
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow15
 
@@ -1573,7 +1622,7 @@ RedrawRow16
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow16
 
@@ -1599,7 +1648,7 @@ RedrawRow17
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow17
 
@@ -1625,7 +1674,7 @@ RedrawRow18
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow18
 
@@ -1651,7 +1700,7 @@ RedrawRow19
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow19
 
@@ -1677,7 +1726,7 @@ RedrawRow20
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow20
 
@@ -1703,7 +1752,7 @@ RedrawRow21
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow21
 
@@ -1729,7 +1778,7 @@ RedrawRow22
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow22
 
@@ -1755,7 +1804,7 @@ RedrawRow23
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow23
 
@@ -1781,7 +1830,7 @@ RedrawRow24
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow24
 
@@ -1807,7 +1856,7 @@ RedrawRow25
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow25
 
@@ -1833,7 +1882,7 @@ RedrawRow26
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow26
 
@@ -1859,7 +1908,7 @@ RedrawRow27
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow27
 
@@ -1885,7 +1934,7 @@ RedrawRow28
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    sta $7F00		; Latch ASCII in A to display.
+    jsr TriggerInterrupt		
 		dex
 		bne RedrawRow28
 
@@ -2973,13 +3022,13 @@ LBL007   adc $C1
          sta ($C1),Y
          pla
          sta $00,X
-         rts
-;
-;
-;
+         rts     
+
+
 LBL015   jsr P_NWLN                 ; Go print CR, LF and pad characters
          lda #$21                   ; '!' character
          jsr OUT_V                  ; Go print it
+
          lda $2A                    ; Load the current TBIL pointer (lo)
          sec                        ; Set the carry flag
          sbc LBL002                 ; Subtract the TBIL table origin (lo)
@@ -3209,6 +3258,7 @@ IL__PC   jsr LBL004                 ; Entry point for TBIL PC (print literal) - 
          bpl LBL043
 LBL042   inc $BF
          bmi LBL044
+         jsr DelayShort
          jmp OUT_V                  ; Go print it
 LBL044   dec $BF
 LBL045   rts
@@ -3885,7 +3935,8 @@ LBL089   jsr OUT_V                  ; Entry point with a character to print firs
 LBL087   lda #$FF                   ; Normal entry point - Set pad to $FF
          bit PCC                    ; Check if the pad flag is on
          bmi LBL134                 ; Skip it if not
-         lda #$00                   ; set pad to $00
+         lda #$20                   ; set pad character
+         jsr DelayShort
 LBL134   jmp OUT_V                  ; Go print it
 
 
@@ -3920,6 +3971,6 @@ ILTBL    .byte $24, $3E, $91, $27, $10, $E1, $59, $C5, $2A, $56, $10, $11, $2C, 
 ; End of Tiny Basic
 
 MBLK
-         .byte  "               vectron 65 basic"
+         .byte  "            vectron 65 basic"
 				 .byte  $0D
          .byte  $FF
