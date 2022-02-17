@@ -190,7 +190,7 @@ StartExe	ORG $8000
 		jsr ClearScreenMemory
 
 		; Set initial screen address.
-		lda #$01
+		lda #$00
 		sta ScreenColumn
 		lda #$01
 		sta ScreenRow
@@ -275,7 +275,7 @@ SNDCHR
 		cmp #$00
 		bne SkipBackSpaceLineWrap
 		lda ScreenRow
-		cmp #$01
+		cmp #$00
 		beq BackSpaceRowOne
 		; Move cursor to end of previous line.
 		lda #$30
@@ -356,7 +356,7 @@ IsPrintable
     jsr TriggerInterrupt
 
 		; Move to start of next line.
-		lda #$01
+		lda #$00
 		sta ScreenColumn
 		inc ScreenRow
 
@@ -406,7 +406,7 @@ NotEnter
 		lda #$27
 		cmp ScreenColumn
 		bne NoLineWrap
-		lda #$01
+		lda #$00
 		sta ScreenColumn
 		inc ScreenRow
 NoLineWrap
