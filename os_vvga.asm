@@ -367,6 +367,8 @@ IsPrintable
 		jsr RedrawScreen
 		lda #$1C
 		sta ScreenRow
+    lda #$00
+		sta ScreenColumn
 NoScreenScroll
 
 		; Set cursor address.
@@ -398,7 +400,7 @@ NotEnter
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
     jsr TriggerInterrupt		
-		sta Temp
+		lda Temp
 		jsr SaveCharacter
 
 		; Advance cursor and handle screen wrapping.
@@ -834,182 +836,182 @@ DoneSavingCharacter
 
 ; Scroll stored screen data up by 1 row.
 ScrollScreenDataUp
-		ldx #$30
+		ldx #$26
 Row2to1
 		lda $5200,x
 		sta $5100,x
 		dex
 		bne Row2to1
 
-		ldx #$30
+		ldx #$26
 Row3to2
 		lda $5300,x
 		sta $5200,x
 		dex
 		bne Row3to2
 
-		ldx #$30
+		ldx #$26
 Row4to3
 		lda $5400,x
 		sta $5300,x
 		dex
 		bne Row4to3
 
-		ldx #$30
+		ldx #$26
 Row5to4
 		lda $5500,x
 		sta $5400,x
 		dex
 		bne Row5to4
 
-		ldx #$30
+		ldx #$26
 Row6to5
 		lda $5600,x
 		sta $5500,x
 		dex
 		bne Row6to5
 
-		ldx #$30
+		ldx #$26
 Row7to6
 		lda $5700,x
 		sta $5600,x
 		dex
 		bne Row7to6
 
-		ldx #$30
+		ldx #$26
 Row8to7
 		lda $5800,x
 		sta $5700,x
 		dex
 		bne Row8to7
 
-		ldx #$30
+		ldx #$26
 Row9to8
 		lda $5900,x
 		sta $5800,x
 		dex
 		bne Row9to8
 
-		ldx #$30
+		ldx #$26
 Row10to9
 		lda $5A00,x
 		sta $5900,x
 		dex
 		bne Row10to9
 
-		ldx #$30
+		ldx #$26
 Row11to10
 		lda $5B00,x
 		sta $5A00,x
 		dex
 		bne Row11to10
 
-		ldx #$30
+		ldx #$26
 Row12to11
 		lda $5C00,x
 		sta $5B00,x
 		dex
 		bne Row12to11
 
-		ldx #$30
+		ldx #$26
 Row13to12
 		lda $5D00,x
 		sta $5C00,x
 		dex
 		bne Row13to12
 
-		ldx #$30
+		ldx #$26
 Row14to13
 		lda $5E00,x
 		sta $5D00,x
 		dex
 		bne Row14to13
 
-		ldx #$30
+		ldx #$26
 Row15to14
 		lda $5F00,x
 		sta $5E00,x
 		dex
 		bne Row15to14
 
-		ldx #$30
+		ldx #$26
 Row16to15
 		lda $6000,x
 		sta $5F00,x
 		dex
 		bne Row16to15
 
-		ldx #$30
+		ldx #$26
 Row17to16
 		lda $6100,x
 		sta $6000,x
 		dex
 		bne Row17to16
 
-		ldx #$30
+		ldx #$26
 Row18to17
 		lda $6200,x
 		sta $6100,x
 		dex
 		bne Row18to17
 
-		ldx #$30
+		ldx #$26
 Row19to18
 		lda $6300,x
 		sta $6200,x
 		dex
 		bne Row19to18
 
-		ldx #$30
+		ldx #$26
 Row20to19
 		lda $6400,x
 		sta $6300,x
 		dex
 		bne Row20to19
 
-		ldx #$30
+		ldx #$26
 Row21to20
 		lda $6500,x
 		sta $6400,x
 		dex
 		bne Row21to20
 
-		ldx #$30
+		ldx #$26
 Row22to21
 		lda $6600,x
 		sta $6500,x
 		dex
 		bne Row22to21
 
-		ldx #$30
+		ldx #$26
 Row23to22
 		lda $6700,x
 		sta $6600,x
 		dex
 		bne Row23to22
 
-		ldx #$30
+		ldx #$26
 Row24to23
 		lda $6800,x
 		sta $6700,x
 		dex
 		bne Row24to23
 
-		ldx #$30
+		ldx #$26
 Row25to24
 		lda $6900,x
 		sta $6800,x
 		dex
 		bne Row25to24
 
-		ldx #$30
+		ldx #$26
 Row26to25
 		lda $6A00,x
 		sta $6900,x
 		dex
 		bne Row26to25
 
-		ldx #$30
+		ldx #$26
 Row27to26
 		lda $6B00,x
 		sta $6A00,x
@@ -1024,7 +1026,7 @@ Row28to27
 		bne Row28to27
 
 		lda #$20 ; Space
-		ldx #$30
+		ldx #$26
 Clear28
 		sta $6C00,x
 		dex
@@ -1037,169 +1039,169 @@ Clear28
 ClearScreenMemory
 		lda #$20 ; Space
 
-		ldx #$30
+		ldx #$26
 ClearScreen1
 		sta $5100,x
 		dex
 		bne ClearScreen1
 
-		ldx #$30
+		ldx #$26
 ClearScreen2
 		sta $5200,x
 		dex
 		bne ClearScreen2
 
-		ldx #$30
+		ldx #$26
 ClearScreen3
 		sta $5300,x
 		dex
 		bne ClearScreen3
 
-		ldx #$30
+		ldx #$26
 ClearScreen4
 		sta $5400,x
 		dex
 		bne ClearScreen4
 
-		ldx #$30
+		ldx #$26
 ClearScreen5
 		sta $5500,x
 		dex
 		bne ClearScreen5
 
-		ldx #$30
+		ldx #$26
 ClearScreen6
 		sta $5600,x
 		dex
 		bne ClearScreen6
 
-		ldx #$30
+		ldx #$26
 ClearScreen7
 		sta $5700,x
 		dex
 		bne ClearScreen7
 
-		ldx #$30
+		ldx #$26
 ClearScreen8
 		sta $5800,x
 		dex
 		bne ClearScreen8
 
-		ldx #$30
+		ldx #$26
 ClearScreen9
 		sta $5900,x
 		dex
 		bne ClearScreen9
 
-		ldx #$30
+		ldx #$26
 ClearScreen10
 		sta $5A00,x
 		dex
 		bne ClearScreen10
 
-		ldx #$30
+		ldx #$26
 ClearScreen11
 		sta $5B00,x
 		dex
 		bne ClearScreen11
 
-		ldx #$30
+		ldx #$26
 ClearScreen12
 		sta $5C00,x
 		dex
 		bne ClearScreen12
 
-		ldx #$30
+		ldx #$26
 ClearScreen13
 		sta $5D00,x
 		dex
 		bne ClearScreen13
 
-		ldx #$30
+		ldx #$26
 ClearScreen14
 		sta $5E00,x
 		dex
 		bne ClearScreen14
 
-		ldx #$30
+		ldx #$26
 ClearScreen15
 		sta $5F00,x
 		dex
 		bne ClearScreen15
 
-		ldx #$30
+		ldx #$26
 ClearScreen16
 		sta $6000,x
 		dex
 		bne ClearScreen16
 
-		ldx #$30
+		ldx #$26
 ClearScreen17
 		sta $6100,x
 		dex
 		bne ClearScreen17
 
-		ldx #$30
+		ldx #$26
 ClearScreen18
 		sta $6200,x
 		dex
 		bne ClearScreen18
 
-		ldx #$30
+		ldx #$26
 ClearScreen19
 		sta $6300,x
 		dex
 		bne ClearScreen19
 
-		ldx #$30
+		ldx #$26
 ClearScreen20
 		sta $6400,x
 		dex
 		bne ClearScreen20
 
-		ldx #$30
+		ldx #$26
 ClearScreen21
 		sta $6500,x
 		dex
 		bne ClearScreen21
 
-		ldx #$30
+		ldx #$26
 ClearScreen22
 		sta $6600,x
 		dex
 		bne ClearScreen22
 
-		ldx #$30
+		ldx #$26
 ClearScreen23
 		sta $6700,x
 		dex
 		bne ClearScreen23
 
-		ldx #$30
+		ldx #$26
 ClearScreen24
 		sta $6800,x
 		dex
 		bne ClearScreen24
 
-		ldx #$30
+		ldx #$26
 ClearScreen25
 		sta $6900,x
 		dex
 		bne ClearScreen25
 
-		ldx #$30
+		ldx #$26
 ClearScreen26
 		sta $6A00,x
 		dex
 		bne ClearScreen26
 
-		ldx #$30
+		ldx #$26
 ClearScreen27
 		sta $6B00,x
 		dex
 		bne ClearScreen27
 
-		ldx #$30
+		ldx #$26
 ClearScreen28
 		sta $6C00,x
 		dex
@@ -1210,19 +1212,15 @@ ClearScreen28
 
 ; Redraw entire display from screen memory.
 RedrawScreen
-		lda #$01
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
+    pha
+    .byte #$DA ; phx - mnemonic unknown to DASM.
+    .byte #$5A ; phy
 
-		ldx #$30
+		lda #$01
+		sta ScreenRow
+		ldx #$26
 RedrawRow1
-		stx $7FF1
+		stx ScreenColumn
 		lda $5100,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1231,24 +1229,18 @@ RedrawRow1
     .word $7FF1 ; Control register.
     ; Clock low
     .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    .word $7FF1 ; Control register
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow1
 
 		lda #$02
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow2
-		stx $7FF1
+		stx ScreenColumn
 		lda $5200,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1258,23 +1250,17 @@ RedrawRow2
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow2
 
 		lda #$03
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow3
-		stx $7FF1
+		stx ScreenColumn
 		lda $5300,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1284,23 +1270,17 @@ RedrawRow3
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow3
 
 		lda #$04
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow4
-		stx $7FF1
+		stx ScreenColumn
 		lda $5400,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1310,23 +1290,17 @@ RedrawRow4
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow4
 
 		lda #$05
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow5
-		stx $7FF1
+		stx ScreenColumn
 		lda $5500,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1336,23 +1310,17 @@ RedrawRow5
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow5
 
 		lda #$06
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow6
-		stx $7FF1
+		stx ScreenColumn
 		lda $5600,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1362,23 +1330,17 @@ RedrawRow6
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow6
 
 		lda #$07
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow7
-		stx $7FF1
+		stx ScreenColumn
 		lda $5700,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1388,23 +1350,17 @@ RedrawRow7
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow7
 
 		lda #$08
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow8
-		stx $7FF1
+		stx ScreenColumn
 		lda $5800,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1414,23 +1370,17 @@ RedrawRow8
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow8
 
 		lda #$09
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow9
-		stx $7FF1
+		stx ScreenColumn
 		lda $5900,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1440,23 +1390,17 @@ RedrawRow9
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow9
 
 		lda #$0A
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow10
-		stx $7FF1
+		stx ScreenColumn
 		lda $5A00,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1466,23 +1410,17 @@ RedrawRow10
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow10
 
 		lda #$0B
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow11
-		stx $7FF1
+		stx ScreenColumn
 		lda $5B00,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1492,23 +1430,17 @@ RedrawRow11
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow11
 
 		lda #$0C
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow12
-		stx $7FF1
+		stx ScreenColumn
 		lda $5C00,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1518,23 +1450,17 @@ RedrawRow12
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow12
 
 		lda #$0D
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow13
-		stx $7FF1
+		stx ScreenColumn
 		lda $5D00,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1544,23 +1470,17 @@ RedrawRow13
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow13
 
 		lda #$0E
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow14
-		stx $7FF1
+		stx ScreenColumn
 		lda $5E00,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1570,23 +1490,17 @@ RedrawRow14
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow14
 
 		lda #$0F
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow15
-		stx $7FF1
+		stx ScreenColumn
 		lda $5F00,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1596,23 +1510,17 @@ RedrawRow15
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow15
 
 		lda #$10
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow16
-		stx $7FF1
+		stx ScreenColumn
 		lda $6000,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1622,23 +1530,17 @@ RedrawRow16
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow16
 
 		lda #$11
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow17
-		stx $7FF1
+		stx ScreenColumn
 		lda $6100,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1648,23 +1550,17 @@ RedrawRow17
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow17
 
 		lda #$12
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow18
-		stx $7FF1
+		stx ScreenColumn
 		lda $6200,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1674,23 +1570,17 @@ RedrawRow18
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow18
 
 		lda #$13
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow19
-		stx $7FF1
+		stx ScreenColumn
 		lda $6300,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1700,23 +1590,17 @@ RedrawRow19
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow19
 
 		lda #$14
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow20
-		stx $7FF1
+		stx ScreenColumn
 		lda $6400,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1726,23 +1610,17 @@ RedrawRow20
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow20
 
 		lda #$15
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow21
-		stx $7FF1
+		stx ScreenColumn
 		lda $6500,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1752,23 +1630,17 @@ RedrawRow21
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow21
 
 		lda #$16
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow22
-		stx $7FF1
+		stx ScreenColumn
 		lda $6600,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1778,23 +1650,17 @@ RedrawRow22
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow22
 
 		lda #$17
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow23
-		stx $7FF1
+		stx ScreenColumn
 		lda $6700,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1804,23 +1670,17 @@ RedrawRow23
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow23
 
 		lda #$18
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow24
-		stx $7FF1
+		stx ScreenColumn
 		lda $6800,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1830,23 +1690,17 @@ RedrawRow24
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow24
 
 		lda #$19
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow25
-		stx $7FF1
+		stx ScreenColumn
 		lda $6900,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1856,23 +1710,17 @@ RedrawRow25
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow25
 
 		lda #$1A
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow26
-		stx $7FF1
+		stx ScreenColumn
 		lda $6A00,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1882,23 +1730,17 @@ RedrawRow26
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow26
 
 		lda #$1B
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow27
-		stx $7FF1
+		stx ScreenColumn
 		lda $6B00,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1908,23 +1750,17 @@ RedrawRow27
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow27
 
 		lda #$1C
-		sta $7FF0
-    lda #$01    ; Select C0 (row) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-
-		ldx #$30
+		sta ScreenRow
+		ldx #$26
 RedrawRow28
-		stx $7FF1
+		stx ScreenColumn
 		lda $6C00,x
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
@@ -1934,9 +1770,15 @@ RedrawRow28
     ; Clock low
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		
+    jsr SetRowCol
+    jsr TriggerInterrupt
+    jsr DelayShort
 		dex
 		bne RedrawRow28
+
+    .byte #$7A ; ply
+    .byte #$FA ; plx
+    pla
 
 		rts
 
