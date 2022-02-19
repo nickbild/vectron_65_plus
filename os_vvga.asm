@@ -268,6 +268,7 @@ SNDCHR
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
     jsr TriggerInterrupt
+    jsr DelayShort
 
 		dec ScreenColumn
 
@@ -300,19 +301,21 @@ SkipBackSpaceLineWrap
     .word $7FF1 ; Control register.
     jsr TriggerInterrupt
 
-		; Set cursor address.
-		jsr SetRowCol
+    ; jsr DelayShort
 
-		lda #$7F		; Cursor.
-		sta $7FF0   ; Data register.
-    lda #$04    ; Select C2 (char) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		; Latch cursor to display.
+		; ; Set cursor address.
+		; jsr SetRowCol
+
+		; lda #$7F		; Cursor.
+		; sta $7FF0   ; Data register.
+    ; lda #$04    ; Select C2 (char) register clock.
+    ; ; Clock high
+    ; .byte #$0C  ; tsb - set bit
+    ; .word $7FF1 ; Control register.
+    ; ; Clock low
+    ; .byte #$1C  ; trb - clear bit
+    ; .word $7FF1 ; Control register.
+    ; jsr TriggerInterrupt		; Latch cursor to display.
 
 		jmp NonPrintable
 NotBackSpace
@@ -342,18 +345,18 @@ IsPrintable
 		cmp #$0D
 		bne NotEnter
 		; Remove cursor.
-    jsr SetRowCol
+    ; jsr SetRowCol
     
-		lda #$20
-		sta $7FF0   ; Data register.
-    lda #$04    ; Select C2 (char) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-    jsr TriggerInterrupt
+		; lda #$20
+		; sta $7FF0   ; Data register.
+    ; lda #$04    ; Select C2 (char) register clock.
+    ; ; Clock high
+    ; .byte #$0C  ; tsb - set bit
+    ; .word $7FF1 ; Control register.
+    ; ; Clock low
+    ; .byte #$1C  ; trb - clear bit
+    ; .word $7FF1 ; Control register.
+    ; jsr TriggerInterrupt
 
 		; Move to start of next line.
 		lda #$00
@@ -372,18 +375,18 @@ IsPrintable
 NoScreenScroll
 
 		; Set cursor address.
-		jsr SetRowCol
+		; jsr SetRowCol
 
-		lda #$7F		; Cursor.
-		sta $7FF0   ; Data register.
-    lda #$04    ; Select C2 (char) register clock.
-    ; Clock high
-    .byte #$0C  ; tsb - set bit
-    .word $7FF1 ; Control register.
-    ; Clock low
-    .byte #$1C  ; trb - clear bit
-    .word $7FF1 ; Control register.
-    jsr TriggerInterrupt		; Latch cursor to display.
+		; lda #$7F		; Cursor.
+		; sta $7FF0   ; Data register.
+    ; lda #$04    ; Select C2 (char) register clock.
+    ; ; Clock high
+    ; .byte #$0C  ; tsb - set bit
+    ; .word $7FF1 ; Control register.
+    ; ; Clock low
+    ; .byte #$1C  ; trb - clear bit
+    ; .word $7FF1 ; Control register.
+    ; jsr TriggerInterrupt		; Latch cursor to display.
 
 		jmp NonPrintable
 NotEnter
@@ -1039,169 +1042,169 @@ Clear28
 ClearScreenMemory
 		lda #$20 ; Space
 
-		ldx #$26
+		ldx #$30
 ClearScreen1
 		sta $5100,x
 		dex
 		bne ClearScreen1
 
-		ldx #$26
+		ldx #$30
 ClearScreen2
 		sta $5200,x
 		dex
 		bne ClearScreen2
 
-		ldx #$26
+		ldx #$30
 ClearScreen3
 		sta $5300,x
 		dex
 		bne ClearScreen3
 
-		ldx #$26
+		ldx #$30
 ClearScreen4
 		sta $5400,x
 		dex
 		bne ClearScreen4
 
-		ldx #$26
+		ldx #$30
 ClearScreen5
 		sta $5500,x
 		dex
 		bne ClearScreen5
 
-		ldx #$26
+		ldx #$30
 ClearScreen6
 		sta $5600,x
 		dex
 		bne ClearScreen6
 
-		ldx #$26
+		ldx #$30
 ClearScreen7
 		sta $5700,x
 		dex
 		bne ClearScreen7
 
-		ldx #$26
+		ldx #$30
 ClearScreen8
 		sta $5800,x
 		dex
 		bne ClearScreen8
 
-		ldx #$26
+		ldx #$30
 ClearScreen9
 		sta $5900,x
 		dex
 		bne ClearScreen9
 
-		ldx #$26
+		ldx #$30
 ClearScreen10
 		sta $5A00,x
 		dex
 		bne ClearScreen10
 
-		ldx #$26
+		ldx #$30
 ClearScreen11
 		sta $5B00,x
 		dex
 		bne ClearScreen11
 
-		ldx #$26
+		ldx #$30
 ClearScreen12
 		sta $5C00,x
 		dex
 		bne ClearScreen12
 
-		ldx #$26
+		ldx #$30
 ClearScreen13
 		sta $5D00,x
 		dex
 		bne ClearScreen13
 
-		ldx #$26
+		ldx #$30
 ClearScreen14
 		sta $5E00,x
 		dex
 		bne ClearScreen14
 
-		ldx #$26
+		ldx #$30
 ClearScreen15
 		sta $5F00,x
 		dex
 		bne ClearScreen15
 
-		ldx #$26
+		ldx #$30
 ClearScreen16
 		sta $6000,x
 		dex
 		bne ClearScreen16
 
-		ldx #$26
+		ldx #$30
 ClearScreen17
 		sta $6100,x
 		dex
 		bne ClearScreen17
 
-		ldx #$26
+		ldx #$30
 ClearScreen18
 		sta $6200,x
 		dex
 		bne ClearScreen18
 
-		ldx #$26
+		ldx #$30
 ClearScreen19
 		sta $6300,x
 		dex
 		bne ClearScreen19
 
-		ldx #$26
+		ldx #$30
 ClearScreen20
 		sta $6400,x
 		dex
 		bne ClearScreen20
 
-		ldx #$26
+		ldx #$30
 ClearScreen21
 		sta $6500,x
 		dex
 		bne ClearScreen21
 
-		ldx #$26
+		ldx #$30
 ClearScreen22
 		sta $6600,x
 		dex
 		bne ClearScreen22
 
-		ldx #$26
+		ldx #$30
 ClearScreen23
 		sta $6700,x
 		dex
 		bne ClearScreen23
 
-		ldx #$26
+		ldx #$30
 ClearScreen24
 		sta $6800,x
 		dex
 		bne ClearScreen24
 
-		ldx #$26
+		ldx #$30
 ClearScreen25
 		sta $6900,x
 		dex
 		bne ClearScreen25
 
-		ldx #$26
+		ldx #$30
 ClearScreen26
 		sta $6A00,x
 		dex
 		bne ClearScreen26
 
-		ldx #$26
+		ldx #$30
 ClearScreen27
 		sta $6B00,x
 		dex
 		bne ClearScreen27
 
-		ldx #$26
+		ldx #$30
 ClearScreen28
 		sta $6C00,x
 		dex
@@ -3778,8 +3781,9 @@ LBL087   lda #$FF                   ; Normal entry point - Set pad to $FF
          bit PCC                    ; Check if the pad flag is on
          bmi LBL134                 ; Skip it if not
          lda #$20                   ; set pad character
+LBL134   
          jsr DelayShort
-LBL134   jmp OUT_V                  ; Go print it
+         jmp OUT_V                  ; Go print it
 
 
 ;
