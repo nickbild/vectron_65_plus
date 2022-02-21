@@ -190,7 +190,7 @@ StartExe	ORG $8000
 		jsr ClearScreenMemory
 
 		; Set initial screen address.
-		lda #$00
+		lda #$01
 		sta ScreenColumn
 		lda #$01
 		sta ScreenRow
@@ -259,6 +259,7 @@ SNDCHR
     jsr SetRowCol
 
 		lda #$20
+    sta Temp
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -270,16 +271,18 @@ SNDCHR
     jsr TriggerInterrupt
     jsr DelayShort
 
+    jsr SaveCharacter
+
 		dec ScreenColumn
 
 		lda ScreenColumn
 		cmp #$00
 		bne SkipBackSpaceLineWrap
 		lda ScreenRow
-		cmp #$00
+		cmp #$01
 		beq BackSpaceRowOne
 		; Move cursor to end of previous line.
-		lda #$30
+		lda #$1E
 		sta ScreenColumn
 		dec ScreenRow
 		jmp SkipBackSpaceLineWrap
@@ -300,6 +303,8 @@ SkipBackSpaceLineWrap
     .byte #$1C  ; trb - clear bit
     .word $7FF1 ; Control register.
     jsr TriggerInterrupt
+
+    jsr SaveCharacter
 
     ; jsr DelayShort
 
@@ -359,7 +364,7 @@ IsPrintable
     ; jsr TriggerInterrupt
 
 		; Move to start of next line.
-		lda #$00
+		lda #$01
 		sta ScreenColumn
 		inc ScreenRow
 
@@ -370,7 +375,7 @@ IsPrintable
 		jsr RedrawScreen
 		lda #$1C
 		sta ScreenRow
-    lda #$00
+    lda #$01
 		sta ScreenColumn
 NoScreenScroll
 
@@ -408,10 +413,10 @@ NotEnter
 
 		; Advance cursor and handle screen wrapping.
 		inc ScreenColumn
-		lda #$27
+		lda #$1E
 		cmp ScreenColumn
 		bne NoLineWrap
-		lda #$00
+		lda #$01
 		sta ScreenColumn
 		inc ScreenRow
 NoLineWrap
@@ -839,182 +844,182 @@ DoneSavingCharacter
 
 ; Scroll stored screen data up by 1 row.
 ScrollScreenDataUp
-		ldx #$26
+		ldx #$1E
 Row2to1
 		lda $5200,x
 		sta $5100,x
 		dex
 		bne Row2to1
 
-		ldx #$26
+		ldx #$1E
 Row3to2
 		lda $5300,x
 		sta $5200,x
 		dex
 		bne Row3to2
 
-		ldx #$26
+		ldx #$1E
 Row4to3
 		lda $5400,x
 		sta $5300,x
 		dex
 		bne Row4to3
 
-		ldx #$26
+		ldx #$1E
 Row5to4
 		lda $5500,x
 		sta $5400,x
 		dex
 		bne Row5to4
 
-		ldx #$26
+		ldx #$1E
 Row6to5
 		lda $5600,x
 		sta $5500,x
 		dex
 		bne Row6to5
 
-		ldx #$26
+		ldx #$1E
 Row7to6
 		lda $5700,x
 		sta $5600,x
 		dex
 		bne Row7to6
 
-		ldx #$26
+		ldx #$1E
 Row8to7
 		lda $5800,x
 		sta $5700,x
 		dex
 		bne Row8to7
 
-		ldx #$26
+		ldx #$1E
 Row9to8
 		lda $5900,x
 		sta $5800,x
 		dex
 		bne Row9to8
 
-		ldx #$26
+		ldx #$1E
 Row10to9
 		lda $5A00,x
 		sta $5900,x
 		dex
 		bne Row10to9
 
-		ldx #$26
+		ldx #$1E
 Row11to10
 		lda $5B00,x
 		sta $5A00,x
 		dex
 		bne Row11to10
 
-		ldx #$26
+		ldx #$1E
 Row12to11
 		lda $5C00,x
 		sta $5B00,x
 		dex
 		bne Row12to11
 
-		ldx #$26
+		ldx #$1E
 Row13to12
 		lda $5D00,x
 		sta $5C00,x
 		dex
 		bne Row13to12
 
-		ldx #$26
+		ldx #$1E
 Row14to13
 		lda $5E00,x
 		sta $5D00,x
 		dex
 		bne Row14to13
 
-		ldx #$26
+		ldx #$1E
 Row15to14
 		lda $5F00,x
 		sta $5E00,x
 		dex
 		bne Row15to14
 
-		ldx #$26
+		ldx #$1E
 Row16to15
 		lda $6000,x
 		sta $5F00,x
 		dex
 		bne Row16to15
 
-		ldx #$26
+		ldx #$1E
 Row17to16
 		lda $6100,x
 		sta $6000,x
 		dex
 		bne Row17to16
 
-		ldx #$26
+		ldx #$1E
 Row18to17
 		lda $6200,x
 		sta $6100,x
 		dex
 		bne Row18to17
 
-		ldx #$26
+		ldx #$1E
 Row19to18
 		lda $6300,x
 		sta $6200,x
 		dex
 		bne Row19to18
 
-		ldx #$26
+		ldx #$1E
 Row20to19
 		lda $6400,x
 		sta $6300,x
 		dex
 		bne Row20to19
 
-		ldx #$26
+		ldx #$1E
 Row21to20
 		lda $6500,x
 		sta $6400,x
 		dex
 		bne Row21to20
 
-		ldx #$26
+		ldx #$1E
 Row22to21
 		lda $6600,x
 		sta $6500,x
 		dex
 		bne Row22to21
 
-		ldx #$26
+		ldx #$1E
 Row23to22
 		lda $6700,x
 		sta $6600,x
 		dex
 		bne Row23to22
 
-		ldx #$26
+		ldx #$1E
 Row24to23
 		lda $6800,x
 		sta $6700,x
 		dex
 		bne Row24to23
 
-		ldx #$26
+		ldx #$1E
 Row25to24
 		lda $6900,x
 		sta $6800,x
 		dex
 		bne Row25to24
 
-		ldx #$26
+		ldx #$1E
 Row26to25
 		lda $6A00,x
 		sta $6900,x
 		dex
 		bne Row26to25
 
-		ldx #$26
+		ldx #$1E
 Row27to26
 		lda $6B00,x
 		sta $6A00,x
@@ -1029,7 +1034,7 @@ Row28to27
 		bne Row28to27
 
 		lda #$20 ; Space
-		ldx #$26
+		ldx #$1E
 Clear28
 		sta $6C00,x
 		dex
@@ -1221,7 +1226,7 @@ RedrawScreen
 
 		lda #$01
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow1
 		stx ScreenColumn
 		lda $5100,x
@@ -1241,7 +1246,7 @@ RedrawRow1
 
 		lda #$02
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow2
 		stx ScreenColumn
 		lda $5200,x
@@ -1261,7 +1266,7 @@ RedrawRow2
 
 		lda #$03
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow3
 		stx ScreenColumn
 		lda $5300,x
@@ -1281,7 +1286,7 @@ RedrawRow3
 
 		lda #$04
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow4
 		stx ScreenColumn
 		lda $5400,x
@@ -1301,7 +1306,7 @@ RedrawRow4
 
 		lda #$05
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow5
 		stx ScreenColumn
 		lda $5500,x
@@ -1321,7 +1326,7 @@ RedrawRow5
 
 		lda #$06
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow6
 		stx ScreenColumn
 		lda $5600,x
@@ -1341,7 +1346,7 @@ RedrawRow6
 
 		lda #$07
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow7
 		stx ScreenColumn
 		lda $5700,x
@@ -1361,7 +1366,7 @@ RedrawRow7
 
 		lda #$08
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow8
 		stx ScreenColumn
 		lda $5800,x
@@ -1381,7 +1386,7 @@ RedrawRow8
 
 		lda #$09
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow9
 		stx ScreenColumn
 		lda $5900,x
@@ -1401,7 +1406,7 @@ RedrawRow9
 
 		lda #$0A
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow10
 		stx ScreenColumn
 		lda $5A00,x
@@ -1421,7 +1426,7 @@ RedrawRow10
 
 		lda #$0B
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow11
 		stx ScreenColumn
 		lda $5B00,x
@@ -1441,7 +1446,7 @@ RedrawRow11
 
 		lda #$0C
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow12
 		stx ScreenColumn
 		lda $5C00,x
@@ -1461,7 +1466,7 @@ RedrawRow12
 
 		lda #$0D
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow13
 		stx ScreenColumn
 		lda $5D00,x
@@ -1481,7 +1486,7 @@ RedrawRow13
 
 		lda #$0E
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow14
 		stx ScreenColumn
 		lda $5E00,x
@@ -1501,7 +1506,7 @@ RedrawRow14
 
 		lda #$0F
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow15
 		stx ScreenColumn
 		lda $5F00,x
@@ -1521,7 +1526,7 @@ RedrawRow15
 
 		lda #$10
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow16
 		stx ScreenColumn
 		lda $6000,x
@@ -1541,7 +1546,7 @@ RedrawRow16
 
 		lda #$11
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow17
 		stx ScreenColumn
 		lda $6100,x
@@ -1561,7 +1566,7 @@ RedrawRow17
 
 		lda #$12
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow18
 		stx ScreenColumn
 		lda $6200,x
@@ -1581,7 +1586,7 @@ RedrawRow18
 
 		lda #$13
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow19
 		stx ScreenColumn
 		lda $6300,x
@@ -1601,7 +1606,7 @@ RedrawRow19
 
 		lda #$14
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow20
 		stx ScreenColumn
 		lda $6400,x
@@ -1621,7 +1626,7 @@ RedrawRow20
 
 		lda #$15
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow21
 		stx ScreenColumn
 		lda $6500,x
@@ -1641,7 +1646,7 @@ RedrawRow21
 
 		lda #$16
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow22
 		stx ScreenColumn
 		lda $6600,x
@@ -1661,7 +1666,7 @@ RedrawRow22
 
 		lda #$17
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow23
 		stx ScreenColumn
 		lda $6700,x
@@ -1681,7 +1686,7 @@ RedrawRow23
 
 		lda #$18
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow24
 		stx ScreenColumn
 		lda $6800,x
@@ -1701,7 +1706,7 @@ RedrawRow24
 
 		lda #$19
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow25
 		stx ScreenColumn
 		lda $6900,x
@@ -1721,7 +1726,7 @@ RedrawRow25
 
 		lda #$1A
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow26
 		stx ScreenColumn
 		lda $6A00,x
@@ -1741,7 +1746,7 @@ RedrawRow26
 
 		lda #$1B
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow27
 		stx ScreenColumn
 		lda $6B00,x
@@ -1761,7 +1766,7 @@ RedrawRow27
 
 		lda #$1C
 		sta ScreenRow
-		ldx #$26
+		ldx #$1E
 RedrawRow28
 		stx ScreenColumn
 		lda $6C00,x
