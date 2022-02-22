@@ -306,22 +306,6 @@ SkipBackSpaceLineWrap
 
     jsr SaveCharacter
 
-    ; jsr DelayShort
-
-		; ; Set cursor address.
-		; jsr SetRowCol
-
-		; lda #$7F		; Cursor.
-		; sta $7FF0   ; Data register.
-    ; lda #$04    ; Select C2 (char) register clock.
-    ; ; Clock high
-    ; .byte #$0C  ; tsb - set bit
-    ; .word $7FF1 ; Control register.
-    ; ; Clock low
-    ; .byte #$1C  ; trb - clear bit
-    ; .word $7FF1 ; Control register.
-    ; jsr TriggerInterrupt		; Latch cursor to display.
-
 		jmp NonPrintable
 NotBackSpace
 
@@ -349,19 +333,6 @@ IsPrintable
 		; Enter?
 		cmp #$0D
 		bne NotEnter
-		; Remove cursor.
-    ; jsr SetRowCol
-    
-		; lda #$20
-		; sta $7FF0   ; Data register.
-    ; lda #$04    ; Select C2 (char) register clock.
-    ; ; Clock high
-    ; .byte #$0C  ; tsb - set bit
-    ; .word $7FF1 ; Control register.
-    ; ; Clock low
-    ; .byte #$1C  ; trb - clear bit
-    ; .word $7FF1 ; Control register.
-    ; jsr TriggerInterrupt
 
 		; Move to start of next line.
 		lda #$01
@@ -378,20 +349,6 @@ IsPrintable
     lda #$01
 		sta ScreenColumn
 NoScreenScroll
-
-		; Set cursor address.
-		; jsr SetRowCol
-
-		; lda #$7F		; Cursor.
-		; sta $7FF0   ; Data register.
-    ; lda #$04    ; Select C2 (char) register clock.
-    ; ; Clock high
-    ; .byte #$0C  ; tsb - set bit
-    ; .word $7FF1 ; Control register.
-    ; ; Clock low
-    ; .byte #$1C  ; trb - clear bit
-    ; .word $7FF1 ; Control register.
-    ; jsr TriggerInterrupt		; Latch cursor to display.
 
 		jmp NonPrintable
 NotEnter
@@ -1250,6 +1207,8 @@ RedrawRow1
 RedrawRow2
 		stx ScreenColumn
 		lda $5200,x
+    cmp $5100,x
+    beq SkipRedrawRow2
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1261,6 +1220,7 @@ RedrawRow2
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow2
 		dex
 		bne RedrawRow2
 
@@ -1270,6 +1230,8 @@ RedrawRow2
 RedrawRow3
 		stx ScreenColumn
 		lda $5300,x
+    cmp $5200,x
+    beq SkipRedrawRow3
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1281,6 +1243,7 @@ RedrawRow3
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow3
 		dex
 		bne RedrawRow3
 
@@ -1290,6 +1253,8 @@ RedrawRow3
 RedrawRow4
 		stx ScreenColumn
 		lda $5400,x
+    cmp $5300,x
+    beq SkipRedrawRow4
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1301,6 +1266,7 @@ RedrawRow4
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow4
 		dex
 		bne RedrawRow4
 
@@ -1310,6 +1276,8 @@ RedrawRow4
 RedrawRow5
 		stx ScreenColumn
 		lda $5500,x
+    cmp $5400,x
+    beq SkipRedrawRow5
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1321,6 +1289,7 @@ RedrawRow5
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow5
 		dex
 		bne RedrawRow5
 
@@ -1330,6 +1299,8 @@ RedrawRow5
 RedrawRow6
 		stx ScreenColumn
 		lda $5600,x
+    cmp $5500,x
+    beq SkipRedrawRow6
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1341,6 +1312,7 @@ RedrawRow6
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow6
 		dex
 		bne RedrawRow6
 
@@ -1350,6 +1322,8 @@ RedrawRow6
 RedrawRow7
 		stx ScreenColumn
 		lda $5700,x
+    cmp $5600,x
+    beq SkipRedrawRow7
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1361,6 +1335,7 @@ RedrawRow7
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow7
 		dex
 		bne RedrawRow7
 
@@ -1370,6 +1345,8 @@ RedrawRow7
 RedrawRow8
 		stx ScreenColumn
 		lda $5800,x
+    cmp $5700,x
+    beq SkipRedrawRow8
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1381,6 +1358,7 @@ RedrawRow8
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow8
 		dex
 		bne RedrawRow8
 
@@ -1390,6 +1368,8 @@ RedrawRow8
 RedrawRow9
 		stx ScreenColumn
 		lda $5900,x
+    cmp $5800,x
+    beq SkipRedrawRow9
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1401,6 +1381,7 @@ RedrawRow9
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow9
 		dex
 		bne RedrawRow9
 
@@ -1410,6 +1391,8 @@ RedrawRow9
 RedrawRow10
 		stx ScreenColumn
 		lda $5A00,x
+    cmp $5900,x
+    beq SkipRedrawRow10
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1421,6 +1404,7 @@ RedrawRow10
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow10
 		dex
 		bne RedrawRow10
 
@@ -1430,6 +1414,8 @@ RedrawRow10
 RedrawRow11
 		stx ScreenColumn
 		lda $5B00,x
+    cmp $5A00,x
+    beq SkipRedrawRow11
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1441,6 +1427,7 @@ RedrawRow11
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow11
 		dex
 		bne RedrawRow11
 
@@ -1450,6 +1437,8 @@ RedrawRow11
 RedrawRow12
 		stx ScreenColumn
 		lda $5C00,x
+    cmp $5B00,x
+    beq SkipRedrawRow12
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1461,6 +1450,7 @@ RedrawRow12
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow12
 		dex
 		bne RedrawRow12
 
@@ -1470,6 +1460,8 @@ RedrawRow12
 RedrawRow13
 		stx ScreenColumn
 		lda $5D00,x
+    cmp $5C00,x
+    beq SkipRedrawRow13
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1481,6 +1473,7 @@ RedrawRow13
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow13
 		dex
 		bne RedrawRow13
 
@@ -1490,6 +1483,8 @@ RedrawRow13
 RedrawRow14
 		stx ScreenColumn
 		lda $5E00,x
+    cmp $5D00,x
+    beq SkipRedrawRow14
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1501,6 +1496,7 @@ RedrawRow14
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow14
 		dex
 		bne RedrawRow14
 
@@ -1510,6 +1506,8 @@ RedrawRow14
 RedrawRow15
 		stx ScreenColumn
 		lda $5F00,x
+    cmp $5E00,x
+    beq SkipRedrawRow15
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1521,6 +1519,7 @@ RedrawRow15
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow15
 		dex
 		bne RedrawRow15
 
@@ -1530,6 +1529,8 @@ RedrawRow15
 RedrawRow16
 		stx ScreenColumn
 		lda $6000,x
+    cmp $5F00,x
+    beq SkipRedrawRow16
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1541,6 +1542,7 @@ RedrawRow16
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow16
 		dex
 		bne RedrawRow16
 
@@ -1550,6 +1552,8 @@ RedrawRow16
 RedrawRow17
 		stx ScreenColumn
 		lda $6100,x
+    cmp $6000,x
+    beq SkipRedrawRow17
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1561,6 +1565,7 @@ RedrawRow17
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow17
 		dex
 		bne RedrawRow17
 
@@ -1570,6 +1575,8 @@ RedrawRow17
 RedrawRow18
 		stx ScreenColumn
 		lda $6200,x
+    cmp $6100,x
+    beq SkipRedrawRow18
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1581,6 +1588,7 @@ RedrawRow18
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow18
 		dex
 		bne RedrawRow18
 
@@ -1590,6 +1598,8 @@ RedrawRow18
 RedrawRow19
 		stx ScreenColumn
 		lda $6300,x
+    cmp $6200,x
+    beq SkipRedrawRow19
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1601,6 +1611,7 @@ RedrawRow19
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow19
 		dex
 		bne RedrawRow19
 
@@ -1610,6 +1621,8 @@ RedrawRow19
 RedrawRow20
 		stx ScreenColumn
 		lda $6400,x
+    cmp $6300,x
+    beq SkipRedrawRow20
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1621,6 +1634,7 @@ RedrawRow20
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow20
 		dex
 		bne RedrawRow20
 
@@ -1630,6 +1644,8 @@ RedrawRow20
 RedrawRow21
 		stx ScreenColumn
 		lda $6500,x
+    cmp $6400,x
+    beq SkipRedrawRow21
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1641,6 +1657,7 @@ RedrawRow21
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow21
 		dex
 		bne RedrawRow21
 
@@ -1650,6 +1667,8 @@ RedrawRow21
 RedrawRow22
 		stx ScreenColumn
 		lda $6600,x
+    cmp $6500,x
+    beq SkipRedrawRow22
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1661,6 +1680,7 @@ RedrawRow22
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow22
 		dex
 		bne RedrawRow22
 
@@ -1670,6 +1690,8 @@ RedrawRow22
 RedrawRow23
 		stx ScreenColumn
 		lda $6700,x
+    cmp $6600,x
+    beq SkipRedrawRow23
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1681,6 +1703,7 @@ RedrawRow23
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow23
 		dex
 		bne RedrawRow23
 
@@ -1690,6 +1713,8 @@ RedrawRow23
 RedrawRow24
 		stx ScreenColumn
 		lda $6800,x
+    cmp $6700,x
+    beq SkipRedrawRow24
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1701,6 +1726,7 @@ RedrawRow24
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow24
 		dex
 		bne RedrawRow24
 
@@ -1710,6 +1736,8 @@ RedrawRow24
 RedrawRow25
 		stx ScreenColumn
 		lda $6900,x
+    cmp $6800,x
+    beq SkipRedrawRow25
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1721,6 +1749,7 @@ RedrawRow25
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow25
 		dex
 		bne RedrawRow25
 
@@ -1730,6 +1759,8 @@ RedrawRow25
 RedrawRow26
 		stx ScreenColumn
 		lda $6A00,x
+    cmp $6900,x
+    beq SkipRedrawRow26
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1741,6 +1772,7 @@ RedrawRow26
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow26
 		dex
 		bne RedrawRow26
 
@@ -1750,6 +1782,8 @@ RedrawRow26
 RedrawRow27
 		stx ScreenColumn
 		lda $6B00,x
+    cmp $6A00,x
+    beq SkipRedrawRow27
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1761,6 +1795,7 @@ RedrawRow27
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow27
 		dex
 		bne RedrawRow27
 
@@ -1770,6 +1805,8 @@ RedrawRow27
 RedrawRow28
 		stx ScreenColumn
 		lda $6C00,x
+    cmp $6B00,x
+    beq SkipRedrawRow28
 		sta $7FF0   ; Data register.
     lda #$04    ; Select C2 (char) register clock.
     ; Clock high
@@ -1781,6 +1818,7 @@ RedrawRow28
     jsr SetRowCol
     jsr TriggerInterrupt
     jsr DelayShort
+SkipRedrawRow28
 		dex
 		bne RedrawRow28
 
@@ -2849,7 +2887,7 @@ LBL006   cld                        ; Make sure we're in binary mode
 ; Routine to service the TBIL Instructions
 ;
 LBL005   cmp #$30                   ;
-         bcs LBL011                 ; If it's $30 or higher, it's a Branch or Jump - go handle it
+         bcs LBL011jump                 ; If it's $30 or higher, it's a Branch or Jump - go handle it
          cmp #$08                   ;
          bcc LBL007                 ; If it's less than $08 it's a stack exchange - go handle it
          asl                        ; Multiply the OP code by 2
@@ -2860,6 +2898,12 @@ LBL022   lda SRVT-$03,X             ; Get the hi byte of the OP Code handling ro
          pha                        ; and save it on the stack
          php                        ; save the processor status too
          rti                        ; now go execute the OP Code handling routine
+
+
+LBL011jump
+         jmp LBL011
+
+
 ;
 ;
 ; Routine to handle the stack exchange
@@ -2878,6 +2922,7 @@ LBL007   adc $C1
 LBL015   jsr P_NWLN                 ; Go print CR, LF and pad characters
          lda #$21                   ; '!' character
          jsr OUT_V                  ; Go print it
+         jsr DelayShort
 
          lda $2A                    ; Load the current TBIL pointer (lo)
          sec                        ; Set the carry flag
@@ -2898,6 +2943,7 @@ LBL015   jsr P_NWLN                 ; Go print CR, LF and pad characters
          jsr LBL010
 LBL012   lda #$07                   ; ASCII Bell
          jsr OUT_V                  ; Go ring Bell
+         jsr DelayShort
          jsr P_NWLN                 ; Go print CR, LF and pad characters
 LBL060   lda $26
          sta $C6
@@ -3377,6 +3423,7 @@ IL__NL   lda $BF                    ; Entry point for TBIL NL
 ;
 P_NWLN   lda #$0D                   ; Load up a CR
          jsr OUT_V                  ; Go print it
+         jsr DelayShort
          lda PCC                    ; Load the pad character code
          and #$7F                   ; Test to see -
          sta $BF                    ; how many pad characters to print
@@ -3782,6 +3829,7 @@ LBL133   rts
 ; Subroutine to decide which pad characters to print
 ;
 LBL089   jsr OUT_V                  ; Entry point with a character to print first
+         jsr DelayShort
 LBL087   lda #$FF                   ; Normal entry point - Set pad to $FF
          bit PCC                    ; Check if the pad flag is on
          bmi LBL134                 ; Skip it if not
