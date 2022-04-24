@@ -457,7 +457,7 @@ DelayShort
     .byte #$DA ; phx - mnemonic unknown to DASM.
     .byte #$5A ; phy
 
-    ldx #$06
+    ldx #$04
 DelayShortLoop1	ldy #$FF
 DelayShortLoop2	dey
 		bne DelayShortLoop2
