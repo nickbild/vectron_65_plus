@@ -43,21 +43,21 @@ StartExe	ORG $8000
 		sta $7FFE
     sta $7FEE
 
-  ; Set DDRB to all outputs.
-  lda #$FF
-  sta $7FF2
+	; Set DDRB to all outputs.
+	lda #$FF
+	sta $7FF2
 
-  ; Set DDRA to all outputs.
-  lda #$FF
-  sta $7FF3
+	; Set DDRA to all outputs.
+	lda #$FF
+	sta $7FF3
 
-  ; Set DDRB to all outputs.
-  lda #$FF
-  sta $7FE2
+	; Set DDRB to all outputs.
+	lda #$FF
+	sta $7FE2
 
-  ; Set DDRA to all outputs.
-  lda #$FF
-  sta $7FE3
+	; Set DDRA to all outputs.
+	lda #$FF
+	sta $7FE3
 
 	; Write blank VGA signal to both RAM chips.
 
@@ -68,26 +68,22 @@ StartExe	ORG $8000
 	sta addrHigh
 
 	; Set inital state of WE/CE on Vectron VGA Plus.
-	; CE high
-  lda #$80
-  .byte #$0C ; tsb - set bit
-	.word #$7FE0
-  ; WE high
-  lda #$40
-  .byte #$0C ; tsb - set bit
-	.word #$7FE0
-	
+	; CE/WE high
+  	lda #$03
+  	.byte #$0C ; tsb - set bit
+  	.word #$7FE0
+  	
 	; Write VGA signal timings for a blank screen to memory.
 	jsr SetupVGA
 
 	; CE low (read mode)
-  ; WE high
-  lda #$40
-  .byte #$0C ; tsb - set bit
+  	; WE high
+  	lda #$01
+  	.byte #$0C ; tsb - set bit
 	.word #$7FE0
-  ; CE low
-  lda #$80
-  .byte #$1C ; trb - clear bit
+  	; CE low
+  	lda #$02
+  	.byte #$1C ; trb - clear bit
 	.word #$7FE0
 
 
@@ -98,26 +94,22 @@ StartExe	ORG $8000
 	sta addrHigh
 
 	; Set inital state of WE/CE on Vectron VGA Plus.
-	; CE high
-  lda #$80
-  .byte #$0C ; tsb - set bit
-	.word #$7FE0
-  ; WE high
-  lda #$40
-  .byte #$0C ; tsb - set bit
-	.word #$7FE0
-	
+	; CE/WE high
+	lda #$03
+  	.byte #$0C ; tsb - set bit
+  	.word #$7FE0
+  	
 	; Write VGA signal timings for a blank screen to memory.
 	jsr SetupVGA
 
 	; CE low (read mode)
-  ; WE high
-  lda #$40
-  .byte #$0C ; tsb - set bit
+  	; WE high
+  	lda #$01
+  	.byte #$0C ; tsb - set bit
 	.word #$7FE0
-  ; CE low
-  lda #$80
-  .byte #$1C ; trb - clear bit
+  	; CE low
+  	lda #$02
+  	.byte #$1C ; trb - clear bit
 	.word #$7FE0
 
 
@@ -396,37 +388,34 @@ WriteData
 	lda addrHigh
 	sta $7FE1
 
-  ; Fit data into bits 2-6 of register shared with
-  ; high address bits (in bits 0-1).
+  	; Fit data into bits 2-6 of register shared with
+  	; high address bits (in bits 0-1).
 	lda data
-  ror
-  ror
-  adc addrHigh
+	rol
+	rol
+	adc addrHigh
 	sta $7FE1
 
 	; Latch data into Vectron VGA Plus memory.
 	
-  ; CE high / WE low
-  lda #$80
-  .byte #$0C ; tsb - set bit
-	.word #$7FE0
-  lda #$40
-  .byte #$1C ; trb - clear bit
+  	; WE low
+  	lda #$01
+  	.byte #$1C ; trb - clear bit
 	.word #$7FE0
 
-  ; CE low
-  lda #$80
-  .byte #$1C ; trb - clear bit
+  	; CE low
+  	lda #$02
+  	.byte #$1C ; trb - clear bit
 	.word #$7FE0
 
-  ; CE high
-  lda #$80
-  .byte #$0C ; tsb - set bit
+  	; CE high
+  	lda #$02
+  	.byte #$0C ; tsb - set bit
 	.word #$7FE0
 	
-  ; WE high
-  lda #$40
-  .byte #$0C ; tsb - set bit
+  	; WE high
+  	lda #$01
+  	.byte #$0C ; tsb - set bit
 	.word #$7FE0
 
 	rts
