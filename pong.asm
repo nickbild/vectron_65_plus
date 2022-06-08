@@ -8,7 +8,7 @@
 ; Reserved memory:
 ;
 ; $0000-$7EFF - RAM
-; 		$0000-$0006 - Named variables
+; 		$0000-$000C - Named variables
 ; 		$0100-$01FF - 6502 stack
 ; $7FE0-$7FEF - 6522 VIA 2
 ; $7FF0-$7FFF - 6522 VIA 1
@@ -35,6 +35,18 @@ addrLowTemp
 addrMidTemp
 		.byte #$00
 addrHighTemp
+		.byte #$00
+addrLowP1
+		.byte #$00
+addrMidP1
+		.byte #$00
+addrHighP1
+		.byte #$00
+addrLowP2
+		.byte #$00
+addrMidP2
+		.byte #$00
+addrHighP2
 		.byte #$00
 
 
@@ -121,30 +133,44 @@ StartExe	ORG $8000
 
 	; Draw paddles in initial positions.
 
-	; Left
-	lda #$1C ; blue
-	sta data
-	
 	lda #$A5
-	sta addrLow
+	sta addrLowP1
 	lda #$0F
-	sta addrMid
+	sta addrMidP1
 	lda #$00
-	sta addrHigh
-	
-	jsr DrawPaddle
-
-	; Right
-	lda #$1C ; blue
-	sta data
+	sta addrHighP1
 
 	lda #$D1
-	sta addrLow
+	sta addrLowP2
 	lda #$10
-	sta addrMid
+	sta addrMidP2
 	lda #$00
+	sta addrHighP2
+
+	; Paddle 1 (Left).
+	lda #$1C ; blue
+	sta data
+
+	lda addrLowP1
+	sta addrLow
+	lda addrMidP1
+	sta addrMid
+	lda addrHighP1
 	sta addrHigh
-	
+
+	jsr DrawPaddle
+
+	; Paddle 2 (Right).
+	lda #$1C ; blue
+	sta data
+
+	lda addrLowP2
+	sta addrLow
+	lda addrMidP2
+	sta addrMid
+	lda addrHighP2
+	sta addrHigh
+
 	jsr DrawPaddle
 
 
