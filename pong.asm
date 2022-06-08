@@ -427,10 +427,10 @@ WriteData
   
 
 NextAddressRow
-	; Add 392 to address.
+	; Add 400 to address.
 	clc
 	lda addrLow
-	adc #$88
+	adc #$90
 	sta addrLow
 	
 	lda addrMid
