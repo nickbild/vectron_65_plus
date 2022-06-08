@@ -8,7 +8,7 @@
 ; Reserved memory:
 ;
 ; $0000-$7EFF - RAM
-; 		$0000-$0006 - Named variables
+; 		$0000-$0004 - Named variables
 ; 		$0100-$01FF - 6502 stack
 ; $7FE0-$7FEF - 6522 VIA 2
 ; $7FF0-$7FFF - 6522 VIA 1
@@ -30,17 +30,19 @@ addrHigh
 		.byte #$00
 data
 		.byte #$00
-
+leftPaddleY
+		.byte #$00
 
 StartExe	ORG $8000
+
 
 	sei						; Disable interrupts.
 
   ; Set up VIAs.
 
   ; Disable all VIA interrupts in IER.
-		lda #$7F
-		sta $7FFE
+	lda #$7F
+	sta $7FFE
     sta $7FEE
 
 	; Set DDRB to all outputs.
@@ -111,6 +113,9 @@ StartExe	ORG $8000
   	lda #$02
   	.byte #$1C ; trb - clear bit
 	.word #$7FE0
+
+
+	jsr DrawLeftPaddle
 
 
 MainLoop:
@@ -420,3 +425,77 @@ WriteData
 
 	rts
   
+
+NextAddressRow
+	; Add 392 to address.
+	clc
+	lda addrLow
+	adc #$88
+	sta addrLow
+	
+	lda addrMid
+	adc #$01
+	sta addrMid
+
+	lda addrHigh
+	adc #$00
+	sta addrHigh
+
+	rts
+
+
+DrawLeftPaddle
+	lda #$19 ; blue
+	sta data
+
+	lda #$0A
+	sta addrLow
+	lda #$00
+	sta addrMid
+	sta addrHigh
+
+	; CE/WE high
+  	lda #$03
+  	.byte #$0C ; tsb - set bit
+  	.word #$7FE0
+
+	jsr WriteData
+	
+	jsr NextAddressRow
+	jsr WriteData
+
+	jsr NextAddressRow
+	jsr WriteData
+
+	jsr NextAddressRow
+	jsr WriteData
+
+	jsr NextAddressRow
+	jsr WriteData
+
+	jsr NextAddressRow
+	jsr WriteData
+
+	jsr NextAddressRow
+	jsr WriteData
+
+	jsr NextAddressRow
+	jsr WriteData
+
+	jsr NextAddressRow
+	jsr WriteData
+
+	jsr NextAddressRow
+	jsr WriteData
+
+	; CE low (read mode)
+  	; WE high
+  	lda #$01
+  	.byte #$0C ; tsb - set bit
+	.word #$7FE0
+  	; CE low
+  	lda #$02
+  	.byte #$1C ; trb - clear bit
+	.word #$7FE0
+
+	rts
