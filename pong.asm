@@ -173,6 +173,46 @@ StartExe	ORG $8000
 
 	jsr DrawPaddle
 
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
 
 MainLoop:
     jmp MainLoop
@@ -577,6 +617,150 @@ DrawPaddle4
   	lda #$02
   	.byte #$1C ; trb - clear bit
 	.word #$7FE0
+
+	.byte #$7A ; ply
+    .byte #$FA ; plx
+
+	rts
+
+
+MovePaddle2Down
+	.byte #$DA ; phx - mnemonic unknown to DASM.
+    .byte #$5A ; phy
+
+	; 1st RAM chip.
+
+	lda addrLowP2
+	sta addrLow
+	lda addrMidP2
+	sta addrMid
+	lda addrHighP2
+	sta addrHigh
+
+	; CE/WE high
+  	lda #$03
+  	.byte #$0C ; tsb - set bit
+  	.word #$7FE0
+
+	; Erase the top line.
+	lda #$18 ; black
+	sta data
+
+	ldy #$05 ; Paddle width (x2).
+MovePaddle2Down1
+	jsr WriteData
+	jsr IncAddress
+	dey
+	bne MovePaddle2Down1
+
+	; Draw a new line 1 row below current bottom.
+	lda #$1C ; blue
+	sta data
+
+	; Add 15,995 to address.
+	clc
+	lda addrLow
+	adc #$7C
+	sta addrLow
+	
+	lda addrMid
+	adc #$3E
+	sta addrMid
+
+	lda addrHigh
+	adc #$00
+	sta addrHigh
+	
+	ldy #$05 ; Paddle width (x2).
+MovePaddle2Down2
+	jsr WriteData
+	jsr IncAddress
+	dey
+	bne MovePaddle2Down2
+
+	; CE low (read mode)
+  	; WE high
+  	lda #$01
+  	.byte #$0C ; tsb - set bit
+	.word #$7FE0
+  	; CE low
+  	lda #$02
+  	.byte #$1C ; trb - clear bit
+	.word #$7FE0
+
+	; 2nd RAM chip.
+
+	lda addrLowP2
+	sta addrLow
+	lda addrMidP2
+	sta addrMid
+	lda addrHighP2
+	sta addrHigh
+
+	; CE/WE high
+  	lda #$03
+  	.byte #$0C ; tsb - set bit
+  	.word #$7FE0
+
+	; Erase the top line.
+	lda #$18 ; black
+	sta data
+
+	ldy #$05 ; Paddle width (x2).
+MovePaddle2Down3
+	jsr WriteData
+	jsr IncAddress
+	dey
+	bne MovePaddle2Down3
+
+	; Draw a new line 1 row below current bottom.
+	lda #$1C ; blue
+	sta data
+
+	; Add 15,995 to address.
+	clc
+	lda addrLow
+	adc #$7C
+	sta addrLow
+	
+	lda addrMid
+	adc #$3E
+	sta addrMid
+
+	lda addrHigh
+	adc #$00
+	sta addrHigh
+	
+	ldy #$05 ; Paddle width (x2).
+MovePaddle2Down4
+	jsr WriteData
+	jsr IncAddress
+	dey
+	bne MovePaddle2Down4
+
+	; CE low (read mode)
+  	; WE high
+  	lda #$01
+  	.byte #$0C ; tsb - set bit
+	.word #$7FE0
+  	; CE low
+  	lda #$02
+  	.byte #$1C ; trb - clear bit
+	.word #$7FE0
+
+	; Add 400 to paddle starting address.
+	clc
+	lda addrLowP2
+	adc #$90
+	sta addrLowP2
+	
+	lda addrMidP2
+	adc #$01
+	sta addrMidP2
+
+	lda addrHighP2
+	adc #$00
+	sta addrHighP2
 
 	.byte #$7A ; ply
     .byte #$FA ; plx
