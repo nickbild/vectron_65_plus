@@ -213,6 +213,173 @@ StartExe	ORG $8000
 	jsr MovePaddle2Down
 	jsr MovePaddle2Down
 	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+
+	jsr MovePaddle2Up
+	
+
+	jsr MovePaddle1Up
+	
 
 MainLoop:
     jmp MainLoop
@@ -624,129 +791,92 @@ DrawPaddle4
 	rts
 
 
+MovePaddle1Up
+	lda addrLowP1
+	sta addrLowTemp
+	lda addrMidP1
+	sta addrMidTemp
+	lda addrHighP1
+	sta addrHighTemp
+
+	jsr MovePaddleUp
+
+	; Subtract 400 from paddle starting address.
+	sec
+	lda addrLowP1
+	sbc #$90
+	sta addrLowP1
+	lda addrMidP1
+	sbc #$01
+	sta addrMidP1
+	lda addrHighP1
+	sbc #$00
+	sta addrHighP1
+
+	rts
+
+
+MovePaddle2Up
+	lda addrLowP2
+	sta addrLowTemp
+	lda addrMidP2
+	sta addrMidTemp
+	lda addrHighP2
+	sta addrHighTemp
+
+	jsr MovePaddleUp
+
+	; Subtract 400 from paddle starting address.
+	sec
+	lda addrLowP2
+	sbc #$90
+	sta addrLowP2
+	lda addrMidP2
+	sbc #$01
+	sta addrMidP2
+	lda addrHighP2
+	sbc #$00
+	sta addrHighP2
+
+	rts
+
+
+MovePaddle1Down
+	lda addrLowP1
+	sta addrLowTemp
+	lda addrMidP1
+	sta addrMidTemp
+	lda addrHighP1
+	sta addrHighTemp
+
+	jsr MovePaddleDown
+
+	; Add 400 to paddle starting address.
+	clc
+	lda addrLowP1
+	adc #$90
+	sta addrLowP1
+	
+	lda addrMidP1
+	adc #$01
+	sta addrMidP1
+
+	lda addrHighP1
+	adc #$00
+	sta addrHighP1
+
+	rts
+
+
 MovePaddle2Down
-	.byte #$DA ; phx - mnemonic unknown to DASM.
-    .byte #$5A ; phy
-
-	; 1st RAM chip.
-
 	lda addrLowP2
-	sta addrLow
+	sta addrLowTemp
 	lda addrMidP2
-	sta addrMid
+	sta addrMidTemp
 	lda addrHighP2
-	sta addrHigh
+	sta addrHighTemp
 
-	; CE/WE high
-  	lda #$03
-  	.byte #$0C ; tsb - set bit
-  	.word #$7FE0
-
-	; Erase the top line.
-	lda #$18 ; black
-	sta data
-
-	ldy #$05 ; Paddle width (x2).
-MovePaddle2Down1
-	jsr WriteData
-	jsr IncAddress
-	dey
-	bne MovePaddle2Down1
-
-	; Draw a new line 1 row below current bottom.
-	lda #$1C ; blue
-	sta data
-
-	; Add 15,995 to address.
-	clc
-	lda addrLow
-	adc #$7C
-	sta addrLow
-	
-	lda addrMid
-	adc #$3E
-	sta addrMid
-
-	lda addrHigh
-	adc #$00
-	sta addrHigh
-	
-	ldy #$05 ; Paddle width (x2).
-MovePaddle2Down2
-	jsr WriteData
-	jsr IncAddress
-	dey
-	bne MovePaddle2Down2
-
-	; CE low (read mode)
-  	; WE high
-  	lda #$01
-  	.byte #$0C ; tsb - set bit
-	.word #$7FE0
-  	; CE low
-  	lda #$02
-  	.byte #$1C ; trb - clear bit
-	.word #$7FE0
-
-	; 2nd RAM chip.
-
-	lda addrLowP2
-	sta addrLow
-	lda addrMidP2
-	sta addrMid
-	lda addrHighP2
-	sta addrHigh
-
-	; CE/WE high
-  	lda #$03
-  	.byte #$0C ; tsb - set bit
-  	.word #$7FE0
-
-	; Erase the top line.
-	lda #$18 ; black
-	sta data
-
-	ldy #$05 ; Paddle width (x2).
-MovePaddle2Down3
-	jsr WriteData
-	jsr IncAddress
-	dey
-	bne MovePaddle2Down3
-
-	; Draw a new line 1 row below current bottom.
-	lda #$1C ; blue
-	sta data
-
-	; Add 15,995 to address.
-	clc
-	lda addrLow
-	adc #$7C
-	sta addrLow
-	
-	lda addrMid
-	adc #$3E
-	sta addrMid
-
-	lda addrHigh
-	adc #$00
-	sta addrHigh
-	
-	ldy #$05 ; Paddle width (x2).
-MovePaddle2Down4
-	jsr WriteData
-	jsr IncAddress
-	dey
-	bne MovePaddle2Down4
-
-	; CE low (read mode)
-  	; WE high
-  	lda #$01
-  	.byte #$0C ; tsb - set bit
-	.word #$7FE0
-  	; CE low
-  	lda #$02
-  	.byte #$1C ; trb - clear bit
-	.word #$7FE0
+	jsr MovePaddleDown
 
 	; Add 400 to paddle starting address.
 	clc
@@ -761,6 +891,353 @@ MovePaddle2Down4
 	lda addrHighP2
 	adc #$00
 	sta addrHighP2
+
+	rts
+
+
+MovePaddleDown
+	.byte #$DA ; phx - mnemonic unknown to DASM.
+    .byte #$5A ; phy
+
+	; 1st RAM chip.
+
+	lda addrLowTemp
+	sta addrLow
+	lda addrMidTemp
+	sta addrMid
+	lda addrHighTemp
+	sta addrHigh
+
+	; CE/WE high
+  	lda #$03
+  	.byte #$0C ; tsb - set bit
+  	.word #$7FE0
+
+	; Erase the top line.
+	lda #$18 ; black
+	sta data
+
+	ldy #$05 ; Paddle width (x2).
+MovePaddleDown1
+	jsr WriteData
+	jsr IncAddress
+	dey
+	bne MovePaddleDown1
+
+	lda addrLowTemp
+	sta addrLow
+	lda addrMidTemp
+	sta addrMid
+	lda addrHighTemp
+	sta addrHigh
+
+	ldy #$05 ; Paddle width (x2).
+MovePaddleDown2
+	jsr WriteData
+	jsr IncAddress
+	dey
+	bne MovePaddleDown2
+
+	; Draw a new line 1 row below current bottom.
+	lda #$1C ; blue
+	sta data
+
+	; Add 15,994 to address.
+	clc
+	lda addrLow
+	adc #$7B
+	sta addrLow
+	
+	lda addrMid
+	adc #$3E
+	sta addrMid
+
+	lda addrHigh
+	adc #$00
+	sta addrHigh
+	
+	ldy #$05 ; Paddle width (x2).
+MovePaddleDown3
+	jsr WriteData
+	jsr IncAddress
+	dey
+	bne MovePaddleDown3
+
+	; CE low (read mode)
+  	; WE high
+  	lda #$01
+  	.byte #$0C ; tsb - set bit
+	.word #$7FE0
+  	; CE low
+  	lda #$02
+  	.byte #$1C ; trb - clear bit
+	.word #$7FE0
+
+	; 2nd RAM chip.
+
+	lda addrLowTemp
+	sta addrLow
+	lda addrMidTemp
+	sta addrMid
+	lda addrHighTemp
+	sta addrHigh
+
+	; CE/WE high
+  	lda #$03
+  	.byte #$0C ; tsb - set bit
+  	.word #$7FE0
+
+	; Erase the top line.
+	lda #$18 ; black
+	sta data
+
+	ldy #$05 ; Paddle width (x2).
+MovePaddleDown4
+	jsr WriteData
+	jsr IncAddress
+	dey
+	bne MovePaddleDown4
+
+	lda addrLowTemp
+	sta addrLow
+	lda addrMidTemp
+	sta addrMid
+	lda addrHighTemp
+	sta addrHigh
+
+	ldy #$05 ; Paddle width (x2).
+MovePaddleDown5
+	jsr WriteData
+	jsr IncAddress
+	dey
+	bne MovePaddleDown5
+
+	; Draw a new line 1 row below current bottom.
+	lda #$1C ; blue
+	sta data
+
+	; Add 15,994 to address.
+	clc
+	lda addrLow
+	adc #$7B
+	sta addrLow
+	
+	lda addrMid
+	adc #$3E
+	sta addrMid
+
+	lda addrHigh
+	adc #$00
+	sta addrHigh
+	
+	ldy #$05 ; Paddle width (x2).
+MovePaddleDown6
+	jsr WriteData
+	jsr IncAddress
+	dey
+	bne MovePaddleDown6
+
+	; CE low (read mode)
+  	; WE high
+  	lda #$01
+  	.byte #$0C ; tsb - set bit
+	.word #$7FE0
+  	; CE low
+  	lda #$02
+  	.byte #$1C ; trb - clear bit
+	.word #$7FE0
+
+	.byte #$7A ; ply
+    .byte #$FA ; plx
+
+	rts
+
+
+MovePaddleUp
+	.byte #$DA ; phx - mnemonic unknown to DASM.
+    .byte #$5A ; phy
+
+	; 1st RAM chip.
+
+	lda addrLowTemp
+	sta addrLow
+	lda addrMidTemp
+	sta addrMid
+	lda addrHighTemp
+	sta addrHigh
+
+	; CE/WE high
+  	lda #$03
+  	.byte #$0C ; tsb - set bit
+  	.word #$7FE0
+
+	; Add a new line 1 row higher.
+	lda #$1C ; blue
+	sta data
+
+	; Subtract 400.
+	sec
+	lda addrLow
+	sbc #$90
+	sta addrLow
+	lda addrMid
+	sbc #$01
+	sta addrMid
+	lda addrHigh
+	sbc #$00
+	sta addrHigh
+
+	ldy #$05 ; Paddle width (x2).
+MovePaddleUp1
+	jsr WriteData
+	jsr IncAddress
+	dey
+	bne MovePaddleUp1
+
+	; Draw a new line 1 row below current bottom.
+	lda #$18 ; black
+	sta data
+
+	; Add 16,394 to address.
+	clc
+	lda addrLow
+	adc #$0A
+	sta addrLow
+	
+	lda addrMid
+	adc #$40
+	sta addrMid
+
+	lda addrHigh
+	adc #$00
+	sta addrHigh
+	
+	ldy #$05 ; Paddle width (x2).
+MovePaddleUp2
+	jsr WriteData
+	jsr IncAddress
+	dey
+	bne MovePaddleUp2
+
+	; Subtract 5.
+	sec
+	lda addrLow
+	sbc #$05
+	sta addrLow
+	lda addrMid
+	sbc #$00
+	sta addrMid
+	lda addrHigh
+	sbc #$00
+	sta addrHigh
+
+	ldy #$05 ; Paddle width (x2).
+MovePaddleUp3
+	jsr WriteData
+	jsr IncAddress
+	dey
+	bne MovePaddleUp3
+
+	; CE low (read mode)
+  	; WE high
+  	lda #$01
+  	.byte #$0C ; tsb - set bit
+	.word #$7FE0
+  	; CE low
+  	lda #$02
+  	.byte #$1C ; trb - clear bit
+	.word #$7FE0
+
+	; 2nd RAM chip.
+
+	lda addrLowTemp
+	sta addrLow
+	lda addrMidTemp
+	sta addrMid
+	lda addrHighTemp
+	sta addrHigh
+
+	; CE/WE high
+  	lda #$03
+  	.byte #$0C ; tsb - set bit
+  	.word #$7FE0
+
+	; Add a new line 1 row higher.
+	lda #$1C ; blue
+	sta data
+
+	; Subtract 400.
+	sec
+	lda addrLow
+	sbc #$90
+	sta addrLow
+	lda addrMid
+	sbc #$01
+	sta addrMid
+	lda addrHigh
+	sbc #$00
+	sta addrHigh
+
+	ldy #$05 ; Paddle width (x2).
+MovePaddleUp4
+	jsr WriteData
+	jsr IncAddress
+	dey
+	bne MovePaddleUp4
+
+	; Draw a new line 1 row below current bottom.
+	lda #$18 ; black
+	sta data
+
+	; Add 16,394 to address.
+	clc
+	lda addrLow
+	adc #$0A
+	sta addrLow
+	
+	lda addrMid
+	adc #$40
+	sta addrMid
+
+	lda addrHigh
+	adc #$00
+	sta addrHigh
+	
+	ldy #$05 ; Paddle width (x2).
+MovePaddleUp5
+	jsr WriteData
+	jsr IncAddress
+	dey
+	bne MovePaddleUp5
+
+	; Subtract 5.
+	sec
+	lda addrLow
+	sbc #$05
+	sta addrLow
+	lda addrMid
+	sbc #$00
+	sta addrMid
+	lda addrHigh
+	sbc #$00
+	sta addrHigh
+
+	ldy #$05 ; Paddle width (x2).
+MovePaddleUp6
+	jsr WriteData
+	jsr IncAddress
+	dey
+	bne MovePaddleUp6
+	
+	; CE low (read mode)
+  	; WE high
+  	lda #$01
+  	.byte #$0C ; tsb - set bit
+	.word #$7FE0
+  	; CE low
+  	lda #$02
+  	.byte #$1C ; trb - clear bit
+	.word #$7FE0
 
 	.byte #$7A ; ply
     .byte #$FA ; plx
