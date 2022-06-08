@@ -8,7 +8,7 @@
 ; Reserved memory:
 ;
 ; $0000-$7EFF - RAM
-; 		$0000-$0004 - Named variables
+; 		$0000-$0006 - Named variables
 ; 		$0100-$01FF - 6502 stack
 ; $7FE0-$7FEF - 6522 VIA 2
 ; $7FF0-$7FFF - 6522 VIA 1
@@ -30,11 +30,15 @@ addrHigh
 		.byte #$00
 data
 		.byte #$00
-leftPaddleY
+addrLowTemp
+		.byte #$00
+addrMidTemp
+		.byte #$00
+addrHighTemp
 		.byte #$00
 
-StartExe	ORG $8000
 
+StartExe	ORG $8000
 
 	sei						; Disable interrupts.
 
@@ -115,36 +119,32 @@ StartExe	ORG $8000
 	.word #$7FE0
 
 
-	lda #$AA
+	; Draw paddles in initial positions.
+
+	; Left
+	lda #$1C ; blue
+	sta data
+	
+	lda #$A5
 	sta addrLow
 	lda #$0F
 	sta addrMid
 	lda #$00
 	sta addrHigh
+	
 	jsr DrawPaddle
 
-	lda #$AA
-	sta addrLow
-	lda #$0F
-	sta addrMid
-	lda #$00
-	sta addrHigh
-	jsr DrawPaddle
+	; Right
+	lda #$1C ; blue
+	sta data
 
-	lda #$CC
+	lda #$D1
 	sta addrLow
 	lda #$10
 	sta addrMid
 	lda #$00
 	sta addrHigh
-	jsr DrawPaddle
-
-	lda #$CC
-	sta addrLow
-	lda #$10
-	sta addrMid
-	lda #$00
-	sta addrHigh
+	
 	jsr DrawPaddle
 
 
@@ -456,11 +456,11 @@ WriteData
 	rts
   
 
-NextAddressRow
-	; Add 400 to address.
+NextPaddleAddressRow
+	; Add 395 to address.
 	clc
 	lda addrLow
-	adc #$90
+	adc #$8B
 	sta addrLow
 	
 	lda addrMid
@@ -475,42 +475,35 @@ NextAddressRow
 
 
 DrawPaddle
-	lda #$1C ; blue
-	sta data
+	.byte #$DA ; phx - mnemonic unknown to DASM.
+    .byte #$5A ; phy
+
+	; Save starting address for write to second RAM chip.
+	lda addrLow
+	sta addrLowTemp
+	lda addrMid
+	sta addrMidTemp
+	lda addrHigh
+	sta addrHighTemp
+
+	; 1st RAM chip.
 
 	; CE/WE high
   	lda #$03
   	.byte #$0C ; tsb - set bit
   	.word #$7FE0
 
+	ldx #$28 ; Paddle height.
+DrawPaddle1
+	ldy #$05 ; Paddle width (x2).
+DrawPaddle2
 	jsr WriteData
-	
-	jsr NextAddressRow
-	jsr WriteData
-
-	jsr NextAddressRow
-	jsr WriteData
-
-	jsr NextAddressRow
-	jsr WriteData
-
-	jsr NextAddressRow
-	jsr WriteData
-
-	jsr NextAddressRow
-	jsr WriteData
-
-	jsr NextAddressRow
-	jsr WriteData
-
-	jsr NextAddressRow
-	jsr WriteData
-
-	jsr NextAddressRow
-	jsr WriteData
-
-	jsr NextAddressRow
-	jsr WriteData
+	jsr IncAddress
+	dey
+	bne DrawPaddle2
+	jsr NextPaddleAddressRow
+	dex
+	bne DrawPaddle1
 
 	; CE low (read mode)
   	; WE high
@@ -521,5 +514,45 @@ DrawPaddle
   	lda #$02
   	.byte #$1C ; trb - clear bit
 	.word #$7FE0
+
+	; 2nd RAM chip.
+
+	; Recover paddle starting address.
+	lda addrLowTemp
+	sta addrLow
+	lda addrMidTemp
+	sta addrMid
+	lda addrHighTemp
+	sta addrHigh
+
+	; CE/WE high
+  	lda #$03
+  	.byte #$0C ; tsb - set bit
+  	.word #$7FE0
+
+	ldx #$28 ; Paddle height.
+DrawPaddle3
+	ldy #$05 ; Paddle width (x2).
+DrawPaddle4
+	jsr WriteData
+	jsr IncAddress
+	dey
+	bne DrawPaddle4
+	jsr NextPaddleAddressRow
+	dex
+	bne DrawPaddle3
+
+	; CE low (read mode)
+  	; WE high
+  	lda #$01
+  	.byte #$0C ; tsb - set bit
+	.word #$7FE0
+  	; CE low
+  	lda #$02
+  	.byte #$1C ; trb - clear bit
+	.word #$7FE0
+
+	.byte #$7A ; ply
+    .byte #$FA ; plx
 
 	rts
