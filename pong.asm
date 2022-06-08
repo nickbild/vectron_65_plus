@@ -376,39 +376,7 @@ StartExe	ORG $8000
 	jsr MovePaddle1Down
 
 	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
 
-
-	jsr MovePaddle1Up
-	jsr MovePaddle1Up
-	jsr MovePaddle1Up
-	jsr MovePaddle1Up
-	jsr MovePaddle1Up
-	jsr MovePaddle1Up
-	jsr MovePaddle1Up
-	jsr MovePaddle1Up
-	jsr MovePaddle1Up
-	jsr MovePaddle1Up
-	jsr MovePaddle1Up
-	
 
 MainLoop:
     jmp MainLoop
