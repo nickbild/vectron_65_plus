@@ -115,7 +115,37 @@ StartExe	ORG $8000
 	.word #$7FE0
 
 
-	jsr DrawLeftPaddle
+	lda #$AA
+	sta addrLow
+	lda #$0F
+	sta addrMid
+	lda #$00
+	sta addrHigh
+	jsr DrawPaddle
+
+	lda #$AA
+	sta addrLow
+	lda #$0F
+	sta addrMid
+	lda #$00
+	sta addrHigh
+	jsr DrawPaddle
+
+	lda #$CC
+	sta addrLow
+	lda #$10
+	sta addrMid
+	lda #$00
+	sta addrHigh
+	jsr DrawPaddle
+
+	lda #$CC
+	sta addrLow
+	lda #$10
+	sta addrMid
+	lda #$00
+	sta addrHigh
+	jsr DrawPaddle
 
 
 MainLoop:
@@ -444,15 +474,9 @@ NextAddressRow
 	rts
 
 
-DrawLeftPaddle
-	lda #$19 ; blue
+DrawPaddle
+	lda #$1C ; blue
 	sta data
-
-	lda #$0A
-	sta addrLow
-	lda #$00
-	sta addrMid
-	sta addrHigh
 
 	; CE/WE high
   	lda #$03
