@@ -1075,16 +1075,16 @@ MovePaddleUp
 	; Subtract 400.
 	sec
 	lda addrLow
-	sbc #$90
+	sbc #$21
 	sta addrLow
 	lda addrMid
-	sbc #$01
+	sbc #$03
 	sta addrMid
 	lda addrHigh
 	sbc #$00
 	sta addrHigh
 
-	ldy #$05 ; Paddle width (x2).
+	ldy #$06 ; Paddle width (x2).
 MovePaddleUp1
 	jsr WriteData
 	jsr IncAddress
@@ -1166,21 +1166,21 @@ MovePaddleUp1
 	; Subtract 400.
 	sec
 	lda addrLow
-	sbc #$90
+	sbc #$21
 	sta addrLow
 	lda addrMid
-	sbc #$01
+	sbc #$03
 	sta addrMid
 	lda addrHigh
 	sbc #$00
 	sta addrHigh
 
-	ldy #$05 ; Paddle width (x2).
+	ldy #$06 ; Paddle width (x2).
 MovePaddleUp4
 	jsr WriteData
 	jsr IncAddress
 	dey
-	bne MovePaddleUp4
+	bne MovePaddleUp4	
 
 ; 	; Draw a new line 1 row below current bottom.
 ; 	lda #$18 ; black
