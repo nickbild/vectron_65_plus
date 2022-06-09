@@ -1183,12 +1183,11 @@ MovePaddleUp1
 	sbc #$00
 	sta addrHigh
 
-	lda #$1C ; blue
-	sta data
-
 	jsr WriteData
 	jsr IncAddress
 
+	lda #$1C ; blue
+	sta data
 
 	ldy #$05 ; Paddle width (x2).
 MovePaddleUp4
