@@ -1072,13 +1072,13 @@ MovePaddleUp
 	lda #$18 ; black
 	sta data
 
-	; Subtract 400.
+	; Subtract 401.
 	sec
 	lda addrLow
-	sbc #$21
+	sbc #$91
 	sta addrLow
 	lda addrMid
-	sbc #$03
+	sbc #$01
 	sta addrMid
 	lda addrHigh
 	sbc #$00
@@ -1099,7 +1099,10 @@ MovePaddleUp1
 	dey
 	bne MovePaddleUp1
 
-	; Draw a new line 1 row below current bottom.
+	; Remove 1 row at current bottom.
+
+	lda #$18 ; black
+	sta data
 	
 	; Add 16,394 to address.
 	clc
@@ -1115,7 +1118,7 @@ MovePaddleUp1
 	adc #$00
 	sta addrHigh
 	
-	ldy #$05 ; Paddle width (x2).
+	ldy #$07 ; Paddle width (x2).
 MovePaddleUp2
 	jsr WriteData
 	jsr IncAddress
@@ -1150,13 +1153,13 @@ MovePaddleUp2
 	lda #$18 ; black
 	sta data
 
-	; Subtract 400.
+	; Subtract 401.
 	sec
 	lda addrLow
-	sbc #$21
+	sbc #$91
 	sta addrLow
 	lda addrMid
-	sbc #$03
+	sbc #$01
 	sta addrMid
 	lda addrHigh
 	sbc #$00
@@ -1175,10 +1178,11 @@ MovePaddleUp4
 	dey
 	bne MovePaddleUp4	
 
-	; Draw a new line 1 row below current bottom.
-	lda #$1C ; blue
-	sta data
+	; Remove 1 row at current bottom.
 
+	lda #$18 ; black
+	sta data
+	
 	; Add 16,394 to address.
 	clc
 	lda addrLow
@@ -1193,7 +1197,7 @@ MovePaddleUp4
 	adc #$00
 	sta addrHigh
 	
-	ldy #$05 ; Paddle width (x2).
+	ldy #$07 ; Paddle width (x2).
 MovePaddleUp5
 	jsr WriteData
 	jsr IncAddress
