@@ -1069,13 +1069,13 @@ MovePaddleUp
   	.word #$7FE0
 
 	; Add a new line 1 row higher.
-	lda #$1C ; blue
+	lda #$18 ; black
 	sta data
 
 	; Subtract 400.
 	sec
 	lda addrLow
-	sbc #$19
+	sbc #$21
 	sta addrLow
 	lda addrMid
 	sbc #$03
@@ -1084,7 +1084,13 @@ MovePaddleUp
 	sbc #$00
 	sta addrHigh
 
+	jsr WriteData
 	jsr IncAddress
+
+
+
+	lda #$1C ; blue
+	sta data
 
 	ldy #$05 ; Paddle width (x2).
 MovePaddleUp1
@@ -1162,13 +1168,13 @@ MovePaddleUp1
   	.word #$7FE0
 
 	; Add a new line 1 row higher.
-	lda #$1C ; blue
+	lda #$18 ; black
 	sta data
 
 	; Subtract 400.
 	sec
 	lda addrLow
-	sbc #$19
+	sbc #$21
 	sta addrLow
 	lda addrMid
 	sbc #$03
@@ -1177,7 +1183,12 @@ MovePaddleUp1
 	sbc #$00
 	sta addrHigh
 
+	lda #$1C ; blue
+	sta data
+
+	jsr WriteData
 	jsr IncAddress
+
 
 	ldy #$05 ; Paddle width (x2).
 MovePaddleUp4
