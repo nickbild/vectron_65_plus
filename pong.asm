@@ -1099,49 +1099,28 @@ MovePaddleUp1
 	dey
 	bne MovePaddleUp1
 
-; 	; Draw a new line 1 row below current bottom.
-; 	lda #$18 ; black
-; 	sta data
-
-; 	; Add 16,394 to address.
-; 	clc
-; 	lda addrLow
-; 	adc #$0A
-; 	sta addrLow
+	; Draw a new line 1 row below current bottom.
 	
-; 	lda addrMid
-; 	adc #$40
-; 	sta addrMid
-
-; 	lda addrHigh
-; 	adc #$00
-; 	sta addrHigh
+	; Add 16,394 to address.
+	clc
+	lda addrLow
+	adc #$0A
+	sta addrLow
 	
-; 	ldy #$05 ; Paddle width (x2).
-; MovePaddleUp2
-; 	jsr WriteData
-; 	jsr IncAddress
-; 	dey
-; 	bne MovePaddleUp2
+	lda addrMid
+	adc #$40
+	sta addrMid
 
-; 	; Subtract 5.
-; 	sec
-; 	lda addrLow
-; 	sbc #$05
-; 	sta addrLow
-; 	lda addrMid
-; 	sbc #$00
-; 	sta addrMid
-; 	lda addrHigh
-; 	sbc #$00
-; 	sta addrHigh
-
-; 	ldy #$05 ; Paddle width (x2).
-; MovePaddleUp3
-; 	jsr WriteData
-; 	jsr IncAddress
-; 	dey
-; 	bne MovePaddleUp3
+	lda addrHigh
+	adc #$00
+	sta addrHigh
+	
+	ldy #$05 ; Paddle width (x2).
+MovePaddleUp2
+	jsr WriteData
+	jsr IncAddress
+	dey
+	bne MovePaddleUp2
 
 	; CE low (read mode)
   	; WE high
@@ -1196,49 +1175,30 @@ MovePaddleUp4
 	dey
 	bne MovePaddleUp4	
 
-; 	; Draw a new line 1 row below current bottom.
-; 	lda #$18 ; black
-; 	sta data
+	; Draw a new line 1 row below current bottom.
+	lda #$1C ; blue
+	sta data
 
-; 	; Add 16,394 to address.
-; 	clc
-; 	lda addrLow
-; 	adc #$0A
-; 	sta addrLow
+	; Add 16,394 to address.
+	clc
+	lda addrLow
+	adc #$0A
+	sta addrLow
 	
-; 	lda addrMid
-; 	adc #$40
-; 	sta addrMid
+	lda addrMid
+	adc #$40
+	sta addrMid
 
-; 	lda addrHigh
-; 	adc #$00
-; 	sta addrHigh
+	lda addrHigh
+	adc #$00
+	sta addrHigh
 	
-; 	ldy #$05 ; Paddle width (x2).
-; MovePaddleUp5
-; 	jsr WriteData
-; 	jsr IncAddress
-; 	dey
-; 	bne MovePaddleUp5
-
-; 	; Subtract 5.
-; 	sec
-; 	lda addrLow
-; 	sbc #$05
-; 	sta addrLow
-; 	lda addrMid
-; 	sbc #$00
-; 	sta addrMid
-; 	lda addrHigh
-; 	sbc #$00
-; 	sta addrHigh
-
-; 	ldy #$05 ; Paddle width (x2).
-; MovePaddleUp6
-; 	jsr WriteData
-; 	jsr IncAddress
-; 	dey
-; 	bne MovePaddleUp6
+	ldy #$05 ; Paddle width (x2).
+MovePaddleUp5
+	jsr WriteData
+	jsr IncAddress
+	dey
+	bne MovePaddleUp5
 	
 	; CE low (read mode)
   	; WE high
