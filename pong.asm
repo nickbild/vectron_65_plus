@@ -939,10 +939,10 @@ MovePaddleDown2
 	lda #$1C ; blue
 	sta data
 
-	; Add 15,995 to address.
+	; Add 15,994 to address.
 	clc
 	lda addrLow
-	adc #$7C
+	adc #$7B
 	sta addrLow
 	
 	lda addrMid
@@ -1013,10 +1013,10 @@ MovePaddleDown5
 	lda #$1C ; blue
 	sta data
 
-	; Add 15,995 to address.
+	; Add 15,994 to address.
 	clc
 	lda addrLow
-	adc #$7C
+	adc #$7B
 	sta addrLow
 	
 	lda addrMid
