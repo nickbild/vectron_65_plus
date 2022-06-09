@@ -1075,7 +1075,7 @@ MovePaddleUp
 	; Subtract 400.
 	sec
 	lda addrLow
-	sbc #$20
+	sbc #$19
 	sta addrLow
 	lda addrMid
 	sbc #$03
@@ -1083,6 +1083,8 @@ MovePaddleUp
 	lda addrHigh
 	sbc #$00
 	sta addrHigh
+
+	jsr IncAddress
 
 	ldy #$05 ; Paddle width (x2).
 MovePaddleUp1
@@ -1166,7 +1168,7 @@ MovePaddleUp1
 	; Subtract 400.
 	sec
 	lda addrLow
-	sbc #$20
+	sbc #$19
 	sta addrLow
 	lda addrMid
 	sbc #$03
@@ -1174,6 +1176,8 @@ MovePaddleUp1
 	lda addrHigh
 	sbc #$00
 	sta addrHigh
+
+	jsr IncAddress
 
 	ldy #$05 ; Paddle width (x2).
 MovePaddleUp4
