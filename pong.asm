@@ -173,207 +173,207 @@ StartExe	ORG $8000
 
 	jsr DrawPaddle
 
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
+	; jsr MovePaddle2Down
 
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
+	; jsr MovePaddle1Down
 
 	jsr MovePaddle2Up
 
