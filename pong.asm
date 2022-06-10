@@ -642,6 +642,29 @@ IncAddress1
   rts
 
 
+WriteDataDummy
+	; Set up the address and data output registers.
+	lda addrLow
+	sta $7FF1
+
+	lda addrMid
+	sta $7FF0
+
+	lda addrHigh
+	sta $7FE1
+
+  	; Fit data into bits 2-6 of register shared with
+  	; high address bits (in bits 0-1).
+	lda data
+	rol
+	rol
+	clc
+	adc addrHigh
+	sta $7FE1
+
+	rts
+
+
 WriteData
 	; Set up the address and data output registers.
 	lda addrLow
@@ -1076,7 +1099,7 @@ MovePaddleUp
 	; Subtract 400.
 	sec
 	lda addrLow
-	sbc #$92
+	sbc #$90
 	sta addrLow
 	lda addrMid
 	sbc #$01
@@ -1085,9 +1108,7 @@ MovePaddleUp
 	sbc #$00
 	sta addrHigh
 
-	jsr IncAddress
-	jsr IncAddress
-
+	jsr WriteDataDummy
 
 	ldy #$05 ; Paddle width (x2).
 MovePaddleUp1
@@ -1153,7 +1174,7 @@ MovePaddleUp2
 	; Subtract 400.
 	sec
 	lda addrLow
-	sbc #$92
+	sbc #$90
 	sta addrLow
 	lda addrMid
 	sbc #$01
@@ -1162,8 +1183,7 @@ MovePaddleUp2
 	sbc #$00
 	sta addrHigh
 
-	jsr IncAddress
-	jsr IncAddress
+	jsr WriteDataDummy
 
 	ldy #$05 ; Paddle width (x2).
 MovePaddleUp4
