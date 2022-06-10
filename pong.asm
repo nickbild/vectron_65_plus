@@ -173,227 +173,90 @@ StartExe	ORG $8000
 
 	jsr DrawPaddle
 
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-	jsr MovePaddle2Down
-
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-	jsr MovePaddle1Down
-
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-
-	jsr MovePaddle1Up
-	jsr MovePaddle1Up
-	jsr MovePaddle1Up
-	jsr MovePaddle1Up
-	jsr MovePaddle1Up
-
 
 MainLoop:
+	jsr MovePaddle2Down
+	jsr DelayShort
+	jsr MovePaddle2Down
+	jsr DelayShort
+	jsr MovePaddle2Down
+	jsr DelayShort
+	jsr MovePaddle2Down
+	jsr DelayShort
+	jsr MovePaddle2Down
+	jsr DelayShort
+	jsr MovePaddle2Down
+	jsr DelayShort
+	jsr MovePaddle2Down
+	jsr DelayShort
+	jsr MovePaddle2Down
+	jsr DelayShort
+	jsr MovePaddle2Down
+	jsr DelayShort
+	jsr MovePaddle2Down
+	jsr DelayShort
+	jsr MovePaddle2Down
+	jsr DelayShort
+	jsr MovePaddle2Down
+	jsr DelayShort
+	jsr MovePaddle2Down
+	jsr DelayShort
+	jsr MovePaddle2Down
+	jsr DelayShort
+	jsr MovePaddle2Down
+	jsr DelayShort
+	jsr MovePaddle2Down
+	jsr DelayShort
+	jsr MovePaddle2Down
+	jsr DelayShort
+	jsr MovePaddle2Down
+	jsr DelayShort
+	jsr MovePaddle2Down
+	jsr DelayShort
+	jsr MovePaddle2Down
+	jsr DelayShort
+
+	jsr MovePaddle2Up
+	jsr DelayShort
+	jsr MovePaddle2Up
+	jsr DelayShort
+	jsr MovePaddle2Up
+	jsr DelayShort
+	jsr MovePaddle2Up
+	jsr DelayShort
+	jsr MovePaddle2Up
+	jsr DelayShort
+	jsr MovePaddle2Up
+	jsr DelayShort
+	jsr MovePaddle2Up
+	jsr DelayShort
+	jsr MovePaddle2Up
+	jsr DelayShort
+	jsr MovePaddle2Up
+	jsr DelayShort
+	jsr MovePaddle2Up
+	jsr DelayShort
+	jsr MovePaddle2Up
+	jsr DelayShort
+	jsr MovePaddle2Up
+	jsr DelayShort
+	jsr MovePaddle2Up
+	jsr DelayShort
+	jsr MovePaddle2Up
+	jsr DelayShort
+	jsr MovePaddle2Up
+	jsr DelayShort
+	jsr MovePaddle2Up
+	jsr DelayShort
+	jsr MovePaddle2Up
+	jsr DelayShort
+	jsr MovePaddle2Up
+	jsr DelayShort
+	jsr MovePaddle2Up
+	jsr DelayShort
+	jsr MovePaddle2Up
+	jsr DelayShort
+
     jmp MainLoop
 
 
@@ -687,9 +550,6 @@ WriteData
 
 	lda addrMid
 	sta $7FF0
-
-	lda addrHigh
-	sta $7FE1
 
   	; Fit data into bits 2-6 of register shared with
   	; high address bits (in bits 0-1).
@@ -1247,3 +1107,20 @@ MovePaddleUp5
     .byte #$FA ; plx
 
 	rts
+
+
+DelayShort
+    .byte #$DA ; phx - mnemonic unknown to DASM.
+    .byte #$5A ; phy
+
+    ldx #$10
+DelayShortLoop1	ldy #$FF
+DelayShortLoop2	dey
+		bne DelayShortLoop2
+		dex
+		bne DelayShortLoop1
+
+    .byte #$7A ; ply
+    .byte #$FA ; plx
+
+		rts
