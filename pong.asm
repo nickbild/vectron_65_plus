@@ -1122,10 +1122,10 @@ MovePaddleUp1
 	lda #$19 ; black
 	sta data
 	
-	; Add 16,394 to address.
+	; Add 16,395 to address.
 	clc
 	lda addrLow
-	adc #$0A
+	adc #$0B
 	sta addrLow
 	
 	lda addrMid
@@ -1197,10 +1197,10 @@ MovePaddleUp4
 	lda #$19 ; black
 	sta data
 	
-	; Add 16,394 to address.
+	; Add 16,395 to address.
 	clc
 	lda addrLow
-	adc #$0A
+	adc #$0B
 	sta addrLow
 	
 	lda addrMid
