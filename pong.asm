@@ -376,21 +376,7 @@ StartExe	ORG $8000
 	jsr MovePaddle1Down
 
 	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
-	jsr MovePaddle2Up
 
-	jsr MovePaddle1Up
-	jsr MovePaddle1Up
-	jsr MovePaddle1Up
-	jsr MovePaddle1Up
-	jsr MovePaddle1Up
 
 MainLoop:
     jmp MainLoop
@@ -1084,13 +1070,13 @@ MovePaddleUp
   	.word #$7FE0
 
 	; Add a new line 1 row higher.
-	lda #$18 ; black
+	lda #$19 ; blue
 	sta data
 
-	; Subtract 401.
+	; Subtract 400.
 	sec
 	lda addrLow
-	sbc #$91
+	sbc #$90
 	sta addrLow
 	lda addrMid
 	sbc #$01
@@ -1098,14 +1084,6 @@ MovePaddleUp
 	lda addrHigh
 	sbc #$00
 	sta addrHigh
-
-	jsr WriteData
-	jsr IncAddress
-
-
-
-	lda #$1C ; blue
-	sta data
 
 	ldy #$05 ; Paddle width (x2).
 MovePaddleUp1
@@ -1116,7 +1094,7 @@ MovePaddleUp1
 
 	; Remove 1 row at current bottom.
 
-	lda #$18 ; black
+	lda #$19 ; black
 	sta data
 	
 	; Add 16,394 to address.
@@ -1133,7 +1111,7 @@ MovePaddleUp1
 	adc #$00
 	sta addrHigh
 	
-	ldy #$07 ; Paddle width (x2).
+	ldy #$05 ; Paddle width (x2).
 MovePaddleUp2
 	jsr WriteData
 	jsr IncAddress
@@ -1165,13 +1143,13 @@ MovePaddleUp2
   	.word #$7FE0
 
 	; Add a new line 1 row higher.
-	lda #$18 ; black
+	lda #$19 ; blue
 	sta data
 
-	; Subtract 401.
+	; Subtract 400.
 	sec
 	lda addrLow
-	sbc #$91
+	sbc #$90
 	sta addrLow
 	lda addrMid
 	sbc #$01
@@ -1179,12 +1157,6 @@ MovePaddleUp2
 	lda addrHigh
 	sbc #$00
 	sta addrHigh
-
-	jsr WriteData
-	jsr IncAddress
-
-	lda #$1C ; blue
-	sta data
 
 	ldy #$05 ; Paddle width (x2).
 MovePaddleUp4
@@ -1195,7 +1167,7 @@ MovePaddleUp4
 
 	; Remove 1 row at current bottom.
 
-	lda #$18 ; black
+	lda #$19 ; black
 	sta data
 	
 	; Add 16,394 to address.
@@ -1212,7 +1184,7 @@ MovePaddleUp4
 	adc #$00
 	sta addrHigh
 	
-	ldy #$07 ; Paddle width (x2).
+	ldy #$05 ; Paddle width (x2).
 MovePaddleUp5
 	jsr WriteData
 	jsr IncAddress
