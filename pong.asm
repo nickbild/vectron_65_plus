@@ -51,7 +51,7 @@ addrHighP2
 
 
 StartExe	ORG $8000
-
+	cld
 	sei						; Disable interrupts.
 
   ; Set up VIAs.
