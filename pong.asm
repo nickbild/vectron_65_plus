@@ -672,6 +672,7 @@ WriteData
 	lda data
 	rol
 	rol
+	clc
 	adc addrHigh
 	sta $7FE1
 
