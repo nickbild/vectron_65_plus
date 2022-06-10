@@ -173,209 +173,224 @@ StartExe	ORG $8000
 
 	jsr DrawPaddle
 
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
-	; jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
+	jsr MovePaddle2Down
 
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
-	; jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
+	jsr MovePaddle1Down
 
 	jsr MovePaddle2Up
+	jsr MovePaddle2Up
+	jsr MovePaddle2Up
+	jsr MovePaddle2Up
+	jsr MovePaddle2Up
+	jsr MovePaddle2Up
+	jsr MovePaddle2Up
+	jsr MovePaddle2Up
+	jsr MovePaddle2Up
+	jsr MovePaddle2Up
+
+	jsr MovePaddle1Up
+	jsr MovePaddle1Up
+	jsr MovePaddle1Up
+	jsr MovePaddle1Up
+	jsr MovePaddle1Up
 
 
 MainLoop:
@@ -1093,7 +1108,7 @@ MovePaddleUp
   	.word #$7FE0
 
 	; Add a new line 1 row higher.
-	lda #$19 ; blue
+	lda #$1C ; blue
 	sta data
 
 	; Subtract 400.
@@ -1119,7 +1134,7 @@ MovePaddleUp1
 
 	; Remove 1 row at current bottom.
 
-	lda #$19 ; black
+	lda #$18 ; black
 	sta data
 	
 	; Add 16,395 to address.
@@ -1168,7 +1183,7 @@ MovePaddleUp2
   	.word #$7FE0
 
 	; Add a new line 1 row higher.
-	lda #$19 ; blue
+	lda #$1C ; blue
 	sta data
 
 	; Subtract 400.
@@ -1194,7 +1209,7 @@ MovePaddleUp4
 
 	; Remove 1 row at current bottom.
 
-	lda #$19 ; black
+	lda #$18 ; black
 	sta data
 	
 	; Add 16,395 to address.
