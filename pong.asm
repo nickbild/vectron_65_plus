@@ -668,6 +668,7 @@ MovePaddle1Up
 	sta addrHighTemp
 
 	jsr MovePaddleUp
+	jsr MovePaddleUp
 
 	; Subtract 400 from paddle starting address.
 	sec
@@ -693,6 +694,7 @@ MovePaddle2Up
 	sta addrHighTemp
 
 	jsr MovePaddleUp
+	jsr MovePaddleUp
 
 	; Subtract 400 from paddle starting address.
 	sec
@@ -717,6 +719,7 @@ MovePaddle1Down
 	lda addrHighP1
 	sta addrHighTemp
 
+	jsr MovePaddleDown
 	jsr MovePaddleDown
 
 	; Add 400 to paddle starting address.
@@ -744,6 +747,7 @@ MovePaddle2Down
 	lda addrHighP2
 	sta addrHighTemp
 
+	jsr MovePaddleDown
 	jsr MovePaddleDown
 
 	; Add 400 to paddle starting address.
