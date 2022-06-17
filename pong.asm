@@ -221,7 +221,7 @@ NotDownP2
 	; Now addrHighP2 is known to be #$00
 	lda addrMidP2
 	cmp #$0C
-	bcs NotUpP2	; if A >= cmp value
+	bcc NotUpP2	; if A < cmp value
 
 MoveUpP2
 	jsr MovePaddle2Up
