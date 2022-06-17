@@ -184,15 +184,50 @@ StartExe	ORG $8000
 
 
 MainLoop:
+	;;;
+	; Move Paddle 2.
+	;;;
+
+	; Check for request to move paddle 2 down.
 	bit $7FE0	; Get bits 6 (V) and 7 (N) from VIA 2, Port B.
-	bmi NOTDOWN
+	bmi NotDownP2
+
+	; Check that paddle is in bounds before allowing further movement.
+	; Should not go higher than 175,600 (#$02ADF0)
+	lda addrHighP2
+	cmp #$03
+	bcs NotDownP2	; if A >= cmp value
+	cmp #$02
+	bcc MoveDownP2	; if A < cmp value
+	; Now addrHighP2 is known to be #$02
+	lda addrMidP2
+	cmp #$AD
+	bcs NotDownP2	; if A >= cmp value
+
+MoveDownP2
 	jsr MovePaddle2Down
-	jmp DONEMOVING
-NOTDOWN
-	bvs NOTUP
+	jmp DoneMovingP2
+NotDownP2
+
+	; Check for request to move paddle 2 up.
+	bit $7FE0	; Get bits 6 (V) and 7 (N) from VIA 2, Port B.
+	bvs NotUpP2
+
+	; Check that paddle is in bounds before allowing further movement.
+	; Should not go lower than 3,200 (#$000C80)
+	lda addrHighP2
+	cmp #$00
+	bne MoveUpP2
+	; Now addrHighP2 is known to be #$00
+	lda addrMidP2
+	cmp #$0C
+	bcs NotUpP2	; if A >= cmp value
+
+MoveUpP2
 	jsr MovePaddle2Up
-NOTUP
-DONEMOVING
+NotUpP2
+
+DoneMovingP2
 
     jmp MainLoop
 
