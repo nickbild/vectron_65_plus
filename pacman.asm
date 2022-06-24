@@ -685,7 +685,7 @@ DrawGhost3
 
 	jsr WriteDataDummy
 
-	ldy #$64
+	ldy #$3C
 DrawGhost6
 	ldx #$4B
 DrawGhost5
@@ -713,7 +713,7 @@ DrawGhost5
 
 	jsr WriteDataDummy
 
-	ldy #$3C
+	ldy #$64
 DrawGhost8
 	ldx #$64
 DrawGhost7
@@ -859,23 +859,23 @@ DrawGhost19
 
 	; top
 
-	ldy #$07
+	ldy #$0A
 DrawGhost24
 
-	ldx #$08
+	ldx #$0C
 DrawGhost21
 	jsr IncAddress
 	jsr WriteData
 	dex
 	bne DrawGhost21
 
-	ldx #$15
+	ldx #$0D
 DrawGhost22
 	jsr IncAddress
 	dex
 	bne DrawGhost22
 
-	ldx #$08
+	ldx #$0C
 DrawGhost23
 	jsr IncAddress
 	jsr WriteData
@@ -904,23 +904,23 @@ DrawGhost23
 
 	; no pupil
 
-	ldy #$02
+	ldy #$05
 DrawGhost28
 
-	ldx #$0F
+	ldx #$13
 DrawGhost25
 	jsr IncAddress
 	jsr WriteData
 	dex
 	bne DrawGhost25
 
-	ldx #$0E
+	ldx #$06
 DrawGhost26
 	jsr IncAddress
 	dex
 	bne DrawGhost26
 
-	ldx #$0F
+	ldx #$13
 DrawGhost27
 	jsr IncAddress
 	jsr WriteData
@@ -934,7 +934,7 @@ DrawGhost27
 
 	; pupil
 
-	ldy #$12
+	ldy #$1A
 DrawGhost28p
 
 	ldx #$07
@@ -946,7 +946,7 @@ DrawGhost25p
 
 	lda #$1C
 	sta data
-	ldx #$08
+	ldx #$0C
 DrawGhost25p1
 	jsr IncAddress
 	jsr WriteData
@@ -955,7 +955,7 @@ DrawGhost25p1
 	lda #$1F
 	sta data
 
-	ldx #$0E
+	ldx #$06
 DrawGhost26p
 	jsr IncAddress
 	dex
@@ -970,7 +970,7 @@ DrawGhost27p
 
 	lda #$1C
 	sta data
-	ldx #$08
+	ldx #$0C
 DrawGhost27p1
 	jsr IncAddress
 	jsr WriteData
@@ -992,23 +992,23 @@ DrawGhost27p1
 
 	jsr WriteDataDummy
 
-	ldy #$07
+	ldy #$0A
 DrawGhost32
 
-	ldx #$08
+	ldx #$0C
 DrawGhost29
 	jsr IncAddress
 	jsr WriteData
 	dex
 	bne DrawGhost29
 
-	ldx #$15
+	ldx #$0D
 DrawGhost30
 	jsr IncAddress
 	dex
 	bne DrawGhost30
 
-	ldx #$08
+	ldx #$0C
 DrawGhost31
 	jsr IncAddress
 	jsr WriteData
