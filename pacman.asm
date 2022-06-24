@@ -531,6 +531,24 @@ Add300
 	rts
 
 
+Add313
+	; Add 313 to address.
+	clc
+	lda addrLow
+	adc #$39
+	sta addrLow
+	
+	lda addrMid
+	adc #$01
+	sta addrMid
+
+	lda addrHigh
+	adc #$00
+	sta addrHigh
+
+	rts
+
+
 Add363
 	; Add 363 to address.
 	clc
@@ -699,10 +717,10 @@ DrawGhost5
 
 	; 4th rows
 	
-	; Subtract 10.
+	; Subtract 5.
 	sec
 	lda addrLow
-	sbc #$0A
+	sbc #$05
 	sta addrLow
 	lda addrMid
 	sbc #$00
@@ -715,13 +733,13 @@ DrawGhost5
 
 	ldy #$64
 DrawGhost8
-	ldx #$64
+	ldx #$57
 DrawGhost7
 	jsr IncAddress
 	jsr WriteData
 	dex
 	bne DrawGhost7
-	jsr Add300
+	jsr Add313
 	dey
 	bne DrawGhost8
 
@@ -756,7 +774,7 @@ DrawGhost9
 	dex
 	bne DrawGhost9
 
-	ldx #$18
+	ldx #$10
 DrawGhost10
 	jsr IncAddress
 	dex
@@ -769,7 +787,7 @@ DrawGhost11
 	dex
 	bne DrawGhost11
 
-	ldx #$13
+	ldx #$10
 DrawGhost12
 	jsr IncAddress
 	dex
@@ -784,6 +802,18 @@ DrawGhost13
 
 	jsr Add325
 	jsr IncAddress
+	jsr IncAddress
+	jsr IncAddress
+	jsr IncAddress
+	jsr IncAddress
+	jsr IncAddress
+	jsr IncAddress
+	jsr IncAddress
+	jsr IncAddress
+	jsr IncAddress
+	jsr IncAddress
+	jsr IncAddress
+
 	dey
 	bne DrawGhost14
 
@@ -813,7 +843,7 @@ DrawGhost15
 	dex
 	bne DrawGhost15
 
-	ldx #$14
+	ldx #$0C
 DrawGhost16
 	jsr IncAddress
 	dex
@@ -826,7 +856,7 @@ DrawGhost17
 	dex
 	bne DrawGhost17
 
-	ldx #$0F
+	ldx #$0C
 DrawGhost18
 	jsr IncAddress
 	dex
@@ -840,6 +870,18 @@ DrawGhost19
 	bne DrawGhost19
 
 	jsr Add320
+	jsr IncAddress
+	jsr IncAddress
+	jsr IncAddress
+	jsr IncAddress
+	jsr IncAddress
+	jsr IncAddress
+	jsr IncAddress
+	jsr IncAddress
+	jsr IncAddress
+	jsr IncAddress
+	jsr IncAddress
+	
 	dey
 	bne DrawGhost20
 
