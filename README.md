@@ -5,11 +5,13 @@ The Vectron 65 Plus is a 6502 CPU-based computer with keyboard support that can 
 At present, I have built the following peripherals for the computer:
 - [Vectron VGA Plus v2](https://github.com/nickbild/vectron_vga_plus_v2) - VGA output with pixel-level control
 - [Vectron VGA Plus Text Mode](https://github.com/nickbild/vectron_vga_plus_text_mode) - Add-on for Vectron VGA Plus v2 that simplifies displaying text on screen
-- [Vectron Sound Plus](https://github.com/nickbild/vectron_sound_plus) - audio output with the AY-3-8910 sound generator
+- [Vectron Sound Plus](https://github.com/nickbild/vectron_sound_plus) - Audio output with the AY-3-8910 sound generator chip
 
 This is an enhanced version of my [Vectron 65](https://github.com/nickbild/vectron_65) computer.
 
 ## How It Works
+
+![](https://raw.githubusercontent.com/nickbild/vectron_65_plus/main/media/schematic.svg)
 
 ## Media
 
