@@ -31,6 +31,12 @@ In this example, the Vectron 65 Plus (right) is hooked up to [Vectron VGA Plus v
 
 ![](https://raw.githubusercontent.com/nickbild/vectron_65_plus/main/media/ghosts_sm.jpg)
 
+And for audio, I added in the [Vectron Sound Plus](https://github.com/nickbild/vectron_sound_plus) module:
+
+![](https://github.com/nickbild/vectron_sound_plus/blob/main/media/v65_w_audio_angle_sm.jpg)
+
+You can download an [MP3 here](https://github.com/nickbild/vectron_sound_plus/blob/main/media/vectron_65_audio.mp3) of a tune I made with it.
+
 ## Bill of Materials
 
 ## About the Author
