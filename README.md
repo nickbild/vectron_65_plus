@@ -35,7 +35,7 @@ And for audio, I added in the [Vectron Sound Plus](https://github.com/nickbild/v
 
 ![](https://github.com/nickbild/vectron_sound_plus/blob/main/media/v65_w_audio_angle_sm.jpg)
 
-You can download an [MP3 here](https://github.com/nickbild/vectron_sound_plus/blob/main/media/vectron_65_audio.mp3) of a tune I made with it.
+You can download an [MP3 here](https://github.com/nickbild/vectron_sound_plus/blob/main/media/vectron_65_audio.mp3?raw=true) of a tune I made with it.
 
 ## Bill of Materials
 
