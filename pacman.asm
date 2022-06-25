@@ -30,6 +30,14 @@ addrHigh
 		.byte #$00
 data
 		.byte #$00
+eyeLow
+		.byte #$00
+eyeMid
+		.byte #$00
+eyeHigh
+		.byte #$00
+ghostColor
+		.byte #$00
 
 
 StartExe	ORG $8000
@@ -112,7 +120,24 @@ StartExe	ORG $8000
   	.byte #$1C ; trb - clear bit
 	.word #$7FE0
 
-	;;; Draw ghost.
+	;;; Draw ghost 1.
+
+	lda #$19
+	sta ghostColor
+
+	lda #$71
+	sta addrLow
+	lda #$1F
+	sta addrMid
+	lda #$00
+	sta addrHigh
+
+	lda #$1D
+	sta eyeLow
+	lda #$61
+	sta eyeMid
+	lda #$00
+	sta eyeHigh
 
 	; CE/WE high
 	lda #$03
@@ -130,6 +155,233 @@ StartExe	ORG $8000
   	lda #$02
   	.byte #$1C ; trb - clear bit
 	.word #$7FE0
+
+	lda #$19
+	sta ghostColor
+
+	lda #$71
+	sta addrLow
+	lda #$1F
+	sta addrMid
+	lda #$00
+	sta addrHigh
+
+	lda #$1D
+	sta eyeLow
+	lda #$61
+	sta eyeMid
+	lda #$00
+	sta eyeHigh
+
+	; CE/WE high
+	lda #$03
+  	.byte #$0C ; tsb - set bit
+  	.word #$7FE0
+
+	jsr DrawGhost
+
+	; CE low (read mode)
+  	; WE high
+  	lda #$01
+  	.byte #$0C ; tsb - set bit
+	.word #$7FE0
+  	; CE low
+  	lda #$02
+  	.byte #$1C ; trb - clear bit
+	.word #$7FE0
+
+	;;; Draw ghost 2.
+
+	lda #$1E
+	sta ghostColor
+
+	lda #$2F
+	sta addrLow
+	lda #$20
+	sta addrMid
+	lda #$00
+	sta addrHigh
+
+	lda #$DB
+	sta eyeLow
+	lda #$61
+	sta eyeMid
+	lda #$00
+	sta eyeHigh
+
+	; CE/WE high
+	lda #$03
+  	.byte #$0C ; tsb - set bit
+  	.word #$7FE0
+
+	jsr DrawGhost
+
+	; CE low (read mode)
+  	; WE high
+  	lda #$01
+  	.byte #$0C ; tsb - set bit
+	.word #$7FE0
+  	; CE low
+  	lda #$02
+  	.byte #$1C ; trb - clear bit
+	.word #$7FE0
+
+	lda #$1E
+	sta ghostColor
+
+	lda #$2F
+	sta addrLow
+	lda #$20
+	sta addrMid
+	lda #$00
+	sta addrHigh
+
+	lda #$DB
+	sta eyeLow
+	lda #$61
+	sta eyeMid
+	lda #$00
+	sta eyeHigh
+
+	; CE/WE high
+	lda #$03
+  	.byte #$0C ; tsb - set bit
+  	.word #$7FE0
+
+	jsr DrawGhost
+
+	; CE low (read mode)
+  	; WE high
+  	lda #$01
+  	.byte #$0C ; tsb - set bit
+	.word #$7FE0
+  	; CE low
+  	lda #$02
+  	.byte #$1C ; trb - clear bit
+	.word #$7FE0
+
+	;;; Draw ghost 3.
+
+	lda #$1A
+	sta ghostColor
+
+	lda #$C1
+	sta addrLow
+	lda #$5F
+	sta addrMid
+	lda #$01
+	sta addrHigh
+
+	lda #$6D
+	sta eyeLow
+	lda #$A1
+	sta eyeMid
+	lda #$01
+	sta eyeHigh
+
+	; CE/WE high
+	lda #$03
+  	.byte #$0C ; tsb - set bit
+  	.word #$7FE0
+
+	jsr DrawGhost
+
+	; CE low (read mode)
+  	; WE high
+  	lda #$01
+  	.byte #$0C ; tsb - set bit
+	.word #$7FE0
+  	; CE low
+  	lda #$02
+  	.byte #$1C ; trb - clear bit
+	.word #$7FE0
+
+	lda #$1A
+	sta ghostColor
+
+	lda #$C1
+	sta addrLow
+	lda #$5F
+	sta addrMid
+	lda #$01
+	sta addrHigh
+
+	lda #$6D
+	sta eyeLow
+	lda #$A1
+	sta eyeMid
+	lda #$01
+	sta eyeHigh
+
+	; CE/WE high
+	lda #$03
+  	.byte #$0C ; tsb - set bit
+  	.word #$7FE0
+
+	jsr DrawGhost
+
+	; CE low (read mode)
+  	; WE high
+  	lda #$01
+  	.byte #$0C ; tsb - set bit
+	.word #$7FE0
+  	; CE low
+  	lda #$02
+  	.byte #$1C ; trb - clear bit
+	.word #$7FE0
+
+	;;; Draw ghost 4.
+
+	lda #$1D
+	sta ghostColor
+
+	lda #$7F
+	sta addrLow
+	lda #$60
+	sta addrMid
+	lda #$01
+	sta addrHigh
+
+	lda #$2B
+	sta eyeLow
+	lda #$A2
+	sta eyeMid
+	lda #$01
+	sta eyeHigh
+
+	; CE/WE high
+	lda #$03
+  	.byte #$0C ; tsb - set bit
+  	.word #$7FE0
+
+	jsr DrawGhost
+
+	; CE low (read mode)
+  	; WE high
+  	lda #$01
+  	.byte #$0C ; tsb - set bit
+	.word #$7FE0
+  	; CE low
+  	lda #$02
+  	.byte #$1C ; trb - clear bit
+	.word #$7FE0
+
+	lda #$1D
+	sta ghostColor
+
+	lda #$7F
+	sta addrLow
+	lda #$60
+	sta addrMid
+	lda #$01
+	sta addrHigh
+
+	lda #$2B
+	sta eyeLow
+	lda #$A2
+	sta eyeMid
+	lda #$01
+	sta eyeHigh
 
 	; CE/WE high
 	lda #$03
@@ -633,17 +885,10 @@ WriteDataDummy
 
 
 DrawGhost
-	lda #$19	; red
+	lda ghostColor
 	sta data
 
 	; 1st rows
-
-	lda #$71
-	sta addrLow
-	lda #$1F
-	sta addrMid
-	lda #$00
-	sta addrHigh
 
 	jsr WriteDataDummy
 
@@ -890,11 +1135,11 @@ DrawGhost19
 	lda #$1F
 	sta data
 
-	lda #$1D
+	lda eyeLow
 	sta addrLow
-	lda #$61
+	lda eyeMid
 	sta addrMid
-	lda #$00
+	lda eyeHigh
 	sta addrHigh
 
 	jsr WriteDataDummy
