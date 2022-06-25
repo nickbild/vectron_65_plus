@@ -21,11 +21,11 @@ This is the circuit design:
 
 ## Media
 
-Here, the Vectron 65 Plus (left) is running TinyBASIC.  On the right, [Vectron VGA Plus Text Mode](https://github.com/nickbild/vectron_vga_plus_text_mode) is stacked on top of [Vectron VGA Plus v2](https://github.com/nickbild/vectron_vga_plus_v2) to provide a text mode VGA display output:
+Here, the Vectron 65 Plus (left) is running TinyBASIC.  On the right, [Vectron VGA Plus Text Mode](https://github.com/nickbild/vectron_vga_plus_text_mode) is stacked on top of [Vectron VGA Plus v2](https://github.com/nickbild/vectron_vga_plus_v2) to provide a text mode VGA display output ([6502 code here](https://github.com/nickbild/vectron_65_plus/blob/main/os_vvga.asm)):
 
 ![](https://raw.githubusercontent.com/nickbild/vectron_65_plus/main/media/running_basic_sm.jpg)
 
-In this example, the Vectron 65 Plus (right) is hooked up to [Vectron VGA Plus v2](https://github.com/nickbild/vectron_vga_plus_v2) to output some bitmap graphics:
+In this example, the Vectron 65 Plus (right) is hooked up to [Vectron VGA Plus v2](https://github.com/nickbild/vectron_vga_plus_v2) to output some bitmap graphics ([6502 code here](https://github.com/nickbild/vectron_65_plus/blob/main/pacman.asm)):
 
 ![](https://raw.githubusercontent.com/nickbild/vectron_65_plus/main/media/v65_displaying_ghosts_sm.jpg)
 
