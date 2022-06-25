@@ -49,6 +49,24 @@ And a few more pictures:
 
 ## Bill of Materials
 
+- 1 x 65C02 CPU
+- 2 x 6522 VIA
+- 1 x 28C256 ROM
+- 1 x AS6C62256A RAM
+- 4 x 74682
+- 1 x 7404
+- 1 x 7408
+- 1 x 7432
+- 1 x 8 MHz crystal oscillator
+- 1 x push button
+- 4 x 3.3K resistors
+- 2 x 5.1K resistors
+- 2 x 10K resistors
+- 3 x 47 uF electrolytic capacitors
+- 14 x 0.1 uF ceramic capacitors
+- 1 x PS/2 connector
+- 1 x PCB ([Kicad design file here](https://github.com/nickbild/vectron_65_plus/tree/main/kicad_vectron_65_plus))
+
 ## About the Author
 
 [Nick A. Bild, MS](https://nickbild79.firebaseapp.com/#!/)
