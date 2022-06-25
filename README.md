@@ -7,6 +7,8 @@ At present, I have built the following peripherals for the computer:
 - [Vectron VGA Plus Text Mode](https://github.com/nickbild/vectron_vga_plus_text_mode) - Add-on for Vectron VGA Plus v2 that simplifies displaying text on screen
 - [Vectron Sound Plus](https://github.com/nickbild/vectron_sound_plus) - Audio output with the AY-3-8910 sound generator chip
 
+![](https://raw.githubusercontent.com/nickbild/vectron_65_plus/main/media/vectron_65_top_angle_sm.jpg)
+
 This is an enhanced version of my [Vectron 65](https://github.com/nickbild/vectron_65) computer.
 
 ## How It Works
