@@ -31,11 +31,21 @@ In this example, the Vectron 65 Plus (right) is hooked up to [Vectron VGA Plus v
 
 ![](https://raw.githubusercontent.com/nickbild/vectron_65_plus/main/media/ghosts_sm.jpg)
 
+![](https://raw.githubusercontent.com/nickbild/vectron_65_plus/main/media/v65_and_vga_sm.jpg)
+
 And for audio, I added in the [Vectron Sound Plus](https://github.com/nickbild/vectron_sound_plus) module:
 
 ![](https://github.com/nickbild/vectron_sound_plus/blob/main/media/v65_w_audio_angle_sm.jpg)
 
 You can download an [MP3 here](https://github.com/nickbild/vectron_sound_plus/blob/main/media/vectron_65_audio.mp3?raw=true) of a tune I made with it.
+
+And a few more pictures:
+
+![](https://github.com/nickbild/vectron_65_plus/blob/main/media/vectron_65_close_connected_sm.jpg)
+
+![](https://github.com/nickbild/vectron_65_plus/blob/main/media/vectron_65_top_sm.jpg)
+
+![](https://github.com/nickbild/vectron_65_plus/blob/main/media/vectron_65_w_text_mode_sm.jpg)
 
 ## Bill of Materials
 
